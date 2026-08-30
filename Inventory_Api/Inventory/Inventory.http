@@ -1,0 +1,6 @@
+@Projet_vitrine_Inventaire_HostAddress = http://localhost:5293
+
+GET {{Projet_vitrine_Inventaire_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

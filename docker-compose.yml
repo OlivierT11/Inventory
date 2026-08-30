@@ -1,0 +1,20 @@
+services:
+  api:
+    build:
+      context: ./Inventory_Api/Inventory
+      dockerfile: Dockerfile
+    container_name: inventory-api
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+
+  client:
+    build:
+      context: ./Inventory_React
+      dockerfile: Dockerfile
+    container_name: inventory-client
+    ports:
+      - "3000:80"
+    depends_on:
+      - api

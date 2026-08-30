@@ -1,0 +1,117 @@
+﻿
+
+// Run the ASP.NET Core project
+URL : cf launchSettings.json : si l'app est lancé en http dans visual studio, utiliser l'url de "http" :  "applicationUrl": "http://localhost:5293"
+
+Error : duplicate System.Reflection.AssemblyTitleAttribute 
+> il y a plusieurs csproj 
+
+Error 404
+> choisir le bon port : cf Output : "Now listening on: http://localhost:5293"
+> utiliser un url de rooting d'un controller [Route("api/[controller]")] : http://localhost:5293/api/products  ;  
+
+dotnet build
+MSBUILD : error MSB1011: Spécifiez le fichier projet ou solution à utiliser car ce dossier en contient plusieurs.
+> plusieurs projets
+> utiliser dotnet build Inventory.csproj
+
+// Run the React project
+lancer d'abord le projet ASP.NET Core dans visual studio
+puis lancer le projet react : cmd > répertoire react > npm run dev 
+
+Error : NetworkError when attempting to fetch resource.
+Si je lance l'appli ASP.NET Core en http :
+Projet react : app.jsx :  fetch("http://localhost:5293/api/products")
+Projet ASP : launchSettings.json :  "applicationUrl": "http://localhost:5293"
+
+
+// Database SQL via Entity Framework 
+https://makolyte.com/ef-core-how-to-create-a-database-and-a-table/#Install_the_EF_Core_nuget_packages
+à la racine du projet :
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+The dotnet ef tool is used to install and update the database:
+dotnet tool install --global dotnet-ef
+
+dotnet ef migrations add InitialCreate
+	> crée un dossier Migrations
+dotnet ef database update
+
+Erreur : "Une erreur liée au réseau ou spécifique à l'instance s'est produite lors de l'établissement d'une connexion à SQL Server. Le serveur est introuvable ou n'est pas accessible. 
+Vérifiez que le nom de l'instance est correct et que SQL Server est configuré pour autoriser les connexions distantes. (provider: Fournisseur de canaux nommés, 
+error: 40 - Impossible d'ouvrir une connexion à SQL Server)"
+> revoir "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=InventoryDb;Trusted_Connection=True;TrustServerCertificate=True"
+
+Voir la DB :
+la base est stockée dans l’instance LocalDB MSSQLLocalDB.
+Dans Visual Studio : Ouvre Affichage > Explorateur d'objets SQL Server.
+
+Update the DB :
+dotnet ef migrations add newMigrationName
+dotnet ef database update
+	si erreur build: dotnet build Inventory.csproj
+
+
+// XUnit
+https://xunit.net/docs/getting-started/v2/getting-started
+aller dans le dossier du sln (root):
+dotnet new xunit
+aller dans le dossier Test:
+dotnet test
+puis, pour connecter le projet de test au projet principal, ajouter le csproj de test à la solution :
+dotnet sln Inventory.slnx add Tests/Tests.csproj
+puis, pour lancer les tests:
+dotnet test Inventory.slnx
+pour lancer un seul test de la liste: 
+voir la liste des tests: dotnet test Inventory.slnx --list-tests
+puis exécuter l'un des tests: dotnet test Inventory.slnx --filter "Tests.UnitTest1.GetAll_ReturnsAllProducts"
+    équivalent à cliquer sur le test dans visuel studio (test.cs) ou dans test explorer
+
+Si erreur "You must install or update .NET to run this application."
+installer la version demandée du framework (en plus de la version la plus récente)
+
+Si erreur Assert ref not found: 
+install The xunit nuget package 
+install The xunit.runner.visualstudio
+using Xunit;
+
+Si error CS0246: Le nom de type ou d'espace de noms 'Inventory' est introuvable (vous manque-t-il une directive using ou une référence d'assembly ?)
+	alors qu'il y a "using Inventory;" dans le code
+
+/ si mock utilisés
+dotnet add package Moq
+
+
+// dotnet clean
+MSBUILD : error MSB1011: Spécifiez le fichier projet ou solution à utiliser car ce dossier en contient plusieurs.
+> il y a plusieurs csproj dans le projet
+
+
+// déplacer un sln 
+Suppose you currently have:
+MyApp/
+└── Project/
+    ├── Project.sln
+    ├── Project.csproj
+    └── Program.cs
+
+Target layout:
+MyApp/
+├── Project.sln
+└── Project/
+    ├── Project.csproj
+    └── Program.cs
+
+From the MyApp folder, run:
+mv Project/Project.sln .
+dotnet sln Project.sln remove Project.csproj
+dotnet sln Project.sln add Project/Project.csproj
+
+
+// Docker
+créer un Dockerfile et un .dockerignore à la racine du projet ASP.NET et du projet React
+créer un docker-compose.yml à la racine de la solution (contient les 2 projets), et y mettre les 2 projets en tant que services
+aller dans le répertoire du docker-compose.yml et exécuter : docker-compose up --build
+corriger les erreurs de build et relancer la commande (note, les erreurs "var crée mais jamais utilisé" sont bloquantes ici, mais pas dans npm run dev)
+aller dans docker desktop > containers (il y a 2 containers) > choisir le container du projet react > cliquer sur "open in browser" pour ouvrir l'appli react dans le navigateur

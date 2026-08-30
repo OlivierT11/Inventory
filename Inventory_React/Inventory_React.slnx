@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="inventory_react.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>
