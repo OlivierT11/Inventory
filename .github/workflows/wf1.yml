@@ -46,7 +46,7 @@ jobs:
           --results-directory "./TestResults"
           --collect:"XPlat Code Coverage"
 
-      - name: Upload test and coverage results
+      - name: Upload test and coverage results as artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -56,6 +56,23 @@ jobs:
             ./TestResults/**/coverage.cobertura.xml
           if-no-files-found: warn
 
+      - name: Install ReportGenerator
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+      
+      - name: Generate human-readable HTML coverage report from coverage.cobertura.xml
+        run: >
+          reportgenerator
+          -reports:./TestResults/**/coverage.cobertura.xml
+          -targetdir:./coverage-report
+          -reporttypes:Html
+      
+      - name: Upload HTML coverage report as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./coverage-report
+    
       - name: Publish application
         run: >
           dotnet publish
