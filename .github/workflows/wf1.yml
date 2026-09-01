@@ -44,6 +44,15 @@ jobs:
           --verbosity normal
           --collect:"XPlat Code Coverage"
 
+      - name: Upload test and coverage results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-and-coverage
+          path: |
+            ./TestResults/**/*.trx
+            ./TestResults/**/coverage.cobertura.xml
+
       - name: Publish application
         run: >
           dotnet publish
