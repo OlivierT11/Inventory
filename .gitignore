@@ -139,6 +139,9 @@ blob-report/
 # Docker
 .docker/
 
-For a Vite project, you might want to keep .env.example in Git:
+# For a Vite project, you might want to keep .env.example in Git:
 .env*
 !.env.example
+
+#publish
+publish/

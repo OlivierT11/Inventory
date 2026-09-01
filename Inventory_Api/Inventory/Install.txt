@@ -124,6 +124,8 @@ aller dans docker desktop > containers (il y a 2 containers) > choisir le contai
 set ASPNETCORE_ENVIRONMENT=Development
 dotnet run
 
+tester l'environnement : echo %ASPNETCORE_ENVIRONMENT%
+
 
 // OpenAPI
 See the JSON describing the api at http://localhost:5293/openapi/v1.json (based on ProductController.cs)
