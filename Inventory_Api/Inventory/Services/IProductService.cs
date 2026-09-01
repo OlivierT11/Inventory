@@ -6,23 +6,23 @@ namespace Inventory.Services
     public interface IProductService
     {
         Task<List<ProductResponseDto>> GetAllAsync(
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default);
 
         Task<ProductResponseDto?> GetByIdAsync(
             int id,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default);
 
         Task<ProductResponseDto> CreateAsync(
             ProductCreateDto dto,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default);
 
         Task<bool> UpdateAsync(
             int id,
             ProductUpdateDto dto,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default);
 
         Task<bool> DeleteAsync(
             int id,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default);
     }
 }

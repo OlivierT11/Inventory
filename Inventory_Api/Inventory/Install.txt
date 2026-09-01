@@ -68,6 +68,9 @@ voir la liste des tests: dotnet test Inventory.slnx --list-tests
 puis exécuter l'un des tests: dotnet test Inventory.slnx --filter "Tests.UnitTest1.GetAll_ReturnsAllProducts"
     équivalent à cliquer sur le test dans visuel studio (test.cs) ou dans test explorer
 
+Pour lancer les tests depuis VS: 
+test > test explorer (le projet ne doit pas être lancé, et le csproj de test doit être ajouté à la solution)
+
 Si erreur "You must install or update .NET to run this application."
 installer la version demandée du framework (en plus de la version la plus récente)
 
@@ -115,3 +118,40 @@ créer un docker-compose.yml à la racine de la solution (contient les 2 projets
 aller dans le répertoire du docker-compose.yml et exécuter : docker-compose up --build
 corriger les erreurs de build et relancer la commande (note, les erreurs "var crée mais jamais utilisé" sont bloquantes ici, mais pas dans npm run dev)
 aller dans docker desktop > containers (il y a 2 containers) > choisir le container du projet react > cliquer sur "open in browser" pour ouvrir l'appli react dans le navigateur
+
+
+// changer d'environnement
+set ASPNETCORE_ENVIRONMENT=Development
+dotnet run
+
+
+// OpenAPI
+See the JSON describing the api at http://localhost:5293/openapi/v1.json (based on ProductController.cs)
+Test it with curl : curl -k https://localhost:5293/openapi/v1.json (don't use -k in production)
+To save the document: curl -k https://localhost:5293/openapi/v1.json -o openapi.json
+
+If your application is hosted under a path such as /my-api, the URL may be:
+https://localhost:5293/my-api/openapi/v1.json
+
+
+// Swagger et Swagger UI
+Affiche les mêmes données que OpenAPI mais avec un meilleur UI
+Permet également d'exécuter les requêtes vers l'API
+http://localhost:5293/swagger
+OpenAPI doit fonctionner pour que Swagger puisse fonctionner, mais swagger peut-être paramétré pour fonctionner seul
+Ajouter des commentaires XML dans les controllers pour que Swagger les affiche
+Swagger is often enabled only in development
+
+/ Swagger versus Postman
+Swagger UI is useful when you want documentation tied directly to the API code. 
+Postman is more focused on manually creating and organizing API requests.
+Swagger:
+    Automatically documents endpoints
+    Shows the API contract
+    Lets you try requests interactively
+    Can support client-code generation
+Postman:
+    Offers advanced request collections
+    Supports complex testing workflows
+    Is useful for manually testing many services
+A common workflow is to use Swagger for API documentation and basic testing, and Postman for more advanced testing.

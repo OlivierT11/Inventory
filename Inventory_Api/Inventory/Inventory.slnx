@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="../Tests/Tests.csproj" />
-  <Project Path="Inventory.csproj" />
-</Solution>

@@ -16,17 +16,17 @@ namespace Inventory.Services
             _productRepository = productRepository;
         }
 
-        public async Task<Product?> GetByIdAsync(int id)
+        public async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await _productRepository.GetByIdAsync(id);
+            return await _productRepository.GetAllAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync()
+        public async Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _productRepository.GetAllAsync();
+            return await _productRepository.GetByIdAsync(id, cancellationToken);
         }
 
-        public async Task<Product> CreateAsync(Product product)
+        public async Task<Product> CreateAsync(Product product, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(product.Name))
             {
@@ -43,10 +43,10 @@ namespace Inventory.Services
                 throw new ArgumentException("Stock quantity cannot be negative.");
             }
 
-            return await _productRepository.CreateAsync(product);
+            return await _productRepository.CreateAsync(product, cancellationToken);
         }
 
-        public async Task<Product?> UpdateAsync(Product product)
+        public async Task<Product?> UpdateAsync(Product product, CancellationToken cancellationToken = default)
         {
             if (product.Id <= 0)
             {
@@ -68,17 +68,17 @@ namespace Inventory.Services
                 throw new ArgumentException("Stock quantity cannot be negative.");
             }
 
-            return await _productRepository.UpdateAsync(product);
+            return await _productRepository.UpdateAsync(product, cancellationToken);
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             if (id <= 0)
             {
                 throw new ArgumentException("A valid product ID is required.");
             }
 
-            return await _productRepository.DeleteAsync(id);
+            return await _productRepository.DeleteAsync(id, cancellationToken);
         }
     }
 }

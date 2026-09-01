@@ -15,6 +15,5 @@
     <Folder Include="src\utils\" />
     <Folder Include="src\styles\" />
     <Folder Include="src\services\" />
-    <Folder Include="src\pages\" />
   </ItemGroup>
 </Project>

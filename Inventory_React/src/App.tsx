@@ -1,13 +1,12 @@
 import './App.css'
-import ProductList from './components/productList';
-import ProductForm from './components/productForm';
+import Product_List from './pages/Product_List';
+
 
 function App() {
 
     return (
         <main className="app-container">
-            <ProductList />
-            <ProductForm />
+            <Product_List />
         </main>
     );
 }

@@ -18,7 +18,7 @@ namespace Inventory.Services
         }
 
         public async Task<List<ProductResponseDto>> GetAllAsync(
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             return await _context.Products
                 .AsNoTracking()
@@ -34,7 +34,7 @@ namespace Inventory.Services
 
         public async Task<ProductResponseDto?> GetByIdAsync(
             int id,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             string cacheKey = $"product:{id}";
 
@@ -70,7 +70,7 @@ namespace Inventory.Services
 
         public async Task<ProductResponseDto> CreateAsync(
             ProductCreateDto dto,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             var product = new Product
             {
@@ -94,7 +94,7 @@ namespace Inventory.Services
         public async Task<bool> UpdateAsync(
             int id,
             ProductUpdateDto dto,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             var product = await _context.Products
                 .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
@@ -115,7 +115,7 @@ namespace Inventory.Services
 
         public async Task<bool> DeleteAsync(
             int id,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             var product = await _context.Products
                 .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
