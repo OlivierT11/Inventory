@@ -36,12 +36,14 @@ jobs:
       - name: Build
         run: dotnet build ${{ env.SOLUTION_FILE }} --configuration ${{ env.CONFIGURATION }} --no-restore
 
-      - name: Run tests
+      - name: Run tests with coverage
         run: >
           dotnet test ${{ env.SOLUTION_FILE }}
           --configuration ${{ env.CONFIGURATION }}
           --no-build
           --verbosity normal
+          --logger "trx;LogFileName=test-results.trx"
+          --results-directory "./TestResults"
           --collect:"XPlat Code Coverage"
 
       - name: Upload test and coverage results
@@ -52,6 +54,7 @@ jobs:
           path: |
             ./TestResults/**/*.trx
             ./TestResults/**/coverage.cobertura.xml
+          if-no-files-found: warn
 
       - name: Publish application
         run: >
