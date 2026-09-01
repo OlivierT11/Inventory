@@ -86,3 +86,27 @@ jobs:
         with:
           name: inventory-api-app
           path: ./publish
+
+  docker-compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Compose services
+        run: docker compose build
+
+      - name: Start services
+        run: docker compose up -d
+
+      - name: Show running containers
+        run: docker compose ps
+
+      - name: Show logs
+        if: failure()
+        run: docker compose logs
+
+      - name: Stop services
+        if: always()
+        run: docker compose down
