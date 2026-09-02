@@ -31,7 +31,8 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      #SonarCloud start
+      # SonarCloud start
+      # Automatic Analysis must be disabled in SonarCloud
       - name: Install SonarScanner
         run: dotnet tool install --global dotnet-sonarscanner
 
