@@ -1,8 +1,14 @@
-﻿using Inventory.Data;
+﻿using Inventory.Controllers;
+using Inventory.Data;
+using Inventory.DTOs;
 using Inventory.Models;
 using Inventory.Repositories;
+using Inventory.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
+using Moq;
+using System.Reflection;
 
 namespace Tests;
 
@@ -283,5 +289,95 @@ public class UnitTest1
                 cancellationTokenSource.Token));
     }
 
+
+    [Fact]
+    public async Task Login_ReturnsOk_WithToken_WhenCredentialsValid()
+    {
+        // Arrange
+        var expectedToken = "fake-jwt-token";
+        var mockService = new Mock<IAuthService>();
+        mockService
+            .Setup(s => s.LogUserAsync(It.IsAny<LoginDto>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(expectedToken);
+
+        var controller = new AuthController(mockService.Object);
+        var dto = new LoginDto { Email = "user@example.com", Password = "Password123!" };
+
+        // Act
+        var actionResult = await controller.Login(dto, CancellationToken.None);
+
+        // Assert
+        var okResult = Assert.IsType<OkObjectResult>(actionResult);
+        Assert.NotNull(okResult.Value);
+
+        // anonymous object { Token = token } -> reflect to get Token property
+        var tokenProp = okResult.Value.GetType().GetProperty("Token", BindingFlags.Public | BindingFlags.Instance);
+        Assert.NotNull(tokenProp);
+        var actualToken = tokenProp.GetValue(okResult.Value) as string;
+        Assert.Equal(expectedToken, actualToken);
+    }
+
+    [Fact]
+    public async Task Login_ReturnsUnauthorized_WhenCredentialsInvalid()
+    {
+        // Arrange
+        var mockService = new Mock<IAuthService>();
+        mockService
+            .Setup(s => s.LogUserAsync(It.IsAny<LoginDto>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((string?)null);
+
+        var controller = new AuthController(mockService.Object);
+        var dto = new LoginDto { Email = "user@example.com", Password = "wrong" };
+
+        // Act
+        var actionResult = await controller.Login(dto, CancellationToken.None);
+
+        // Assert
+        Assert.IsType<UnauthorizedObjectResult>(actionResult);
+    }
+
+    [Fact]
+    public async Task AddUser_ReturnsOk_WhenServiceAddsUser()
+    {
+        // Arrange
+        var mockService = new Mock<IAuthService>();
+        mockService
+            .Setup(s => s.AddUserAsync(It.IsAny<CreateUserDTO>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+
+        var controller = new AuthController(mockService.Object);
+        var request = new CreateUserDTO { Email = "new@example.com", Password = "Pass123!" };
+
+        // Act
+        var actionResult = await controller.AddUser(request, CancellationToken.None);
+
+        // Assert
+        var okResult = Assert.IsType<OkObjectResult>(actionResult);
+        Assert.NotNull(okResult.Value);
+
+        var messageProp = okResult.Value.GetType().GetProperty("message", BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+        Assert.NotNull(messageProp);
+        var message = messageProp.GetValue(okResult.Value) as string;
+        Assert.Contains("User created", message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task AddUser_ReturnsBadRequest_WhenServiceFailsToAddUser()
+    {
+        // Arrange
+        var mockService = new Mock<IAuthService>();
+        mockService
+            .Setup(s => s.AddUserAsync(It.IsAny<CreateUserDTO>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(false);
+
+        var controller = new AuthController(mockService.Object);
+        var request = new CreateUserDTO { Email = "new@example.com", Password = "Pass123!" };
+
+        // Act
+        var actionResult = await controller.AddUser(request, CancellationToken.None);
+
+        // Assert
+        Assert.IsType<BadRequestObjectResult>(actionResult);
+    }
 
 }

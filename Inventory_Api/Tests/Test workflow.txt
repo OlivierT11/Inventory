@@ -1,0 +1,7 @@
+Create unit tests using XUnit
+Make sure the Tests.csproj is referenced by the solution
+Make sure "dotnet test" runs on GitHub Actions
+Commit the project on GitHub
+Read the HTML coverage report from GitHub Action's artifacts
+Identify the untested parts of code (in red)
+Define if they should be tested (business critical)

@@ -131,6 +131,7 @@ Thumbs.db
 test-results/
 playwright-report/
 blob-report/
+test_results_and_coverage_from_github_actions/
 
 # Local Netlify/Vercel files
 .netlify/

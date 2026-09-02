@@ -1,0 +1,7 @@
+
+
+
+Code quality :
+CodeQL: Security analysis -> Finding exploitable vulnerabilities and unsafe data flows
+SonarCloud: Code quality and maintainability -> Finding bugs, code smells, duplication, complexity, and tracking quality
+dotnet format: Formatting and basic analyzer enforcement -> Keeping source code consistent and enforcing .NET style rules

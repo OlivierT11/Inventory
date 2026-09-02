@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.Repositories
 {
-    public class ProductRepository2: IProductRepository2
+    public class ProductRepository2 : IProductRepository2
     {
         private readonly AppDbContext _context;
         private readonly DbSet<Product> _products;
@@ -12,7 +12,7 @@ namespace Inventory.Repositories
         private readonly TimeSpan _timeout;
 
         public ProductRepository2(
-            AppDbContext context, 
+            AppDbContext context,
             ILogger<ProductRepository2> logger,
             TimeSpan? timeout = null)
         {
@@ -29,7 +29,7 @@ namespace Inventory.Repositories
         /// <param name="cancellationToken">The cancellation token (set as default if the method is called outside a controller).</param>
         /// <returns>The requested product or null if not found.</returns>
         public async Task<Product?> GetByIdAsync(
-            int id, 
+            int id,
             CancellationToken cancellationToken = default)
         {
             // timeout token
@@ -135,7 +135,7 @@ namespace Inventory.Repositories
                 _logger.LogWarning(
                     "Create product timed out");
                 throw;
-            } 
+            }
         }
 
         /// <summary>

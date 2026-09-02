@@ -1,0 +1,42 @@
+﻿// Contenu de ce projet vitrine C#
+
+API RESTful pour la gestion d'inventaire
+ASP.NET Core
+Entity Framework Core
+Structure backend: Controller -> Service -> Repository
+Structure de projet standard (arborescence)
+Xunit + Github Actions pour les tests unitaires automatisés
+Tests unitaires des appels DB (dont cancelation token) et des appels API
+Docker pour le déploiement et la conteneurisation
+CRUD database calls
+OpenAPI et Swagger pour la documentation de l'API
+React frontend + Typescript
+	Formulaire de création d'un produit
+	Visualisation d'un produit
+	Recherche avec pagination
+	Login avec jwt
+Gestion du cache pour l'optimisation des performances
+Github
+Transactions et gestion des erreurs (SQL Server)
+Auth JWT pour la sécurisation de l'API
+env dev/prod séparés
+Azure cloud pour le déploiement de l'application, avec Azure SQL et Azure Vault
+Validation des données côté serveur et côté client
+Logs d’erreurs (ILogger)
+Notifications front après les opérations CRUD.
+Pipeline GitHub Actions pour l'intégration continue et le déploiement continu (CI/CD) :
+	Build and run
+	Tests XUnit
+	Docker compose
+	Code quality avec CodeQL, SonarCloud et dotnet format
+	Images docker
+	Déploiement Azure cloud
+OpenAPI + Swagger UI pour tester les API
+
+
+// TODO 
+cache appels API
+TU appels API
+front: login form + session
+joli front (blanc centré sur fond noir)
+SonarCloud et dotnet format

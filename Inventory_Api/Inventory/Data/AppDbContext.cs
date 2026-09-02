@@ -11,6 +11,7 @@ namespace Inventory.Data
         }
 
         public DbSet<Product> Products => Set<Product>();
+        public DbSet<User> Users => Set<User>();
         //public DbSet<Category> Categories => Set<Category>();
         //public DbSet<Supplier> Suppliers => Set<Supplier>();
         //public DbSet<Warehouse> Warehouses => Set<Warehouse>();

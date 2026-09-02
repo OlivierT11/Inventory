@@ -34,6 +34,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 The dotnet ef tool is used to install and update the database:
 dotnet tool install --global dotnet-ef
 
+Création initiale de la DB :
 dotnet ef migrations add InitialCreate
 	> crée un dossier Migrations
 dotnet ef database update
@@ -50,7 +51,7 @@ Dans Visual Studio : Ouvre Affichage > Explorateur d'objets SQL Server.
 Update the DB :
 dotnet ef migrations add newMigrationName
 dotnet ef database update
-	si erreur build: dotnet build Inventory.csproj
+	si erreur build: dotnet build Inventory.csproj et corriger les erreurs de build
 
 
 // XUnit
@@ -157,3 +158,25 @@ Postman:
     Supports complex testing workflows
     Is useful for manually testing many services
 A common workflow is to use Swagger for API documentation and basic testing, and Postman for more advanced testing.
+
+
+// Tester un artifact du projet fait avec Github Actions
+aller dans le dossier:
+dotnet Inventory.dll
+
+// GitHub action basic workflow
+A practical ASP.NET Core setup is:
+    Unit-test workflow: dotnet restore, dotnet build, dotnet test
+    Integration-test workflow: docker compose up, integration tests, docker compose down
+    Deployment workflow: build and push the Docker image, then deploy it
+
+
+// Add a package
+dotnet add package Microsoft.AspNetCore.Identity
+
+// check code quality (formatting)
+dotnet format is a .NET code formatter that applies style preferences and static analysis recommendations to a project or solution, reading settings from an .editorconfig file if you have one.
+dotnet format Inventory.slnx
+    > attention, ça modifie le code source directement (enlève les espaces en trop etc), donc penser à vérifier les changements avant de commit
+Si on ne veut pas que ça modifie le code source, on peut utiliser l'option --verify-no-changes pour juste vérifier le code sans le modifier:
+dotnet format Inventory.slnx --verify-no-changes 

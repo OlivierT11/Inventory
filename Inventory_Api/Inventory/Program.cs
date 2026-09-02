@@ -1,6 +1,12 @@
 using Inventory.Data;
+using Inventory.Repositories;
 using Inventory.Services;
+using Inventory.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +29,32 @@ if (inContainer)
     builder.WebHost.UseUrls("http://0.0.0.0:8080");
 }
 
+// jwt authentication service
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var signingKey = jwtSettings["Key"]
+    ?? throw new InvalidOperationException("JWT key is missing.");
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(signingKey)),
+
+            ValidateIssuer = true,
+            ValidIssuer = jwtSettings["Issuer"],
+
+            ValidateAudience = true,
+            ValidAudience = jwtSettings["Audience"],
+
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.FromMinutes(1)
+        };
+    });
+
+builder.Services.AddAuthorization(); //jwt
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
@@ -32,14 +64,19 @@ builder.Services.AddCors(options =>
     options.AddPolicy("ReactApp", policy =>
     {
         policy
-            .WithOrigins(allowedOrigins)  
+            .WithOrigins(allowedOrigins)
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
 });
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<JwtTokenService>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
+// IMemoryCache service for caching
 builder.Services.AddMemoryCache();
 
 builder.Logging.ClearProviders();
@@ -75,6 +112,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseCors("ReactApp");
 
+app.UseAuthentication(); //jwt
 app.UseAuthorization();
 
 app.MapControllers();
