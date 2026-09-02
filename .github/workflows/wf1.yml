@@ -66,6 +66,13 @@ jobs:
           --results-directory "./TestResults"
           --collect:"XPlat Code Coverage"
 
+      # sonarcloud end
+      # This should be placed here, before the test results are generated, or else SonarCloud will analyse them too.
+      - name: Finish SonarCloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+        
       - name: Upload test and coverage results as artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -92,12 +99,6 @@ jobs:
         with:
           name: coverage-report
           path: ./coverage-report
-
-      # sonarcloud end
-      - name: Finish SonarCloud analysis
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
         
       - name: Publish application
         run: >
