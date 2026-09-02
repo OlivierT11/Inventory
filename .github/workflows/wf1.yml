@@ -108,12 +108,42 @@ jobs:
           --no-build
           --output ./publish
 
-      - name: Upload published application
+      # To retain or inspect the published files. Not required for deployment.
+      - name: Upload published application as artifact
         uses: actions/upload-artifact@v4
         with:
           name: inventory-api-app
           path: ./publish
-            
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build-and-test #it will start after build-and-test
+    
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: inventory-api-app
+          path: ./publish
+      
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B8F38F7DBA274ADDBAD3665AFC885538 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_729C202279144406B83BD963673268AC }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_435095FF8CA84777BD13C91DED8AA850 }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'Inventory'
+          package: ./publish
+          
   docker-compose:
     runs-on: ubuntu-latest
 
