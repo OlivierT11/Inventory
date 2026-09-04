@@ -207,9 +207,10 @@ az logout
 // Connect GitHub actions to azure
 1. add the GitHub actions code
 2. add the GitHub secrets (le client ID est celui de l'app sur azure, pas de l'user)
-3. azure > Microsoft Entra ID > App registrations > resister a user if none already > user > Certificates & secrets > Federated credentials > vérifier que la string corresponds :
+3. azure > Microsoft Entra ID > App registrations > register a user if none already > user > Certificates & secrets > Federated credentials > vérifier que la string corresponds :
 Azure : repo:OlivierT11@302779682/Inventory@1351579909:ref:refs/heads/main
 GitHub: repo:OlivierT11@302779682/Inventory@1351579909:ref:refs/heads/main
+4. Créer un user "contributor" via le CLI pour accéder à azure depuis GitHub (cf commandes)
 
 // Azure secrets
 
@@ -225,6 +226,9 @@ da69f096-74fa-450c-95c1-aecd390c5e10
 
 Tenant ID
 d90e59f7-f941-42f4-892a-5bb6fd449b24
+
+Service principal object ID 
+dd936fc6-d605-47d9-aada-fc3b5fa5b0aa
 
 / my app (Inventory)
 Application (client) ID
