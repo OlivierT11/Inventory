@@ -46,7 +46,7 @@ namespace Inventory.Services
                     Id = product.Id,
                     Name = product.Name,
                     Price = product.Price,
-                    Stock = product.Stock 
+                    Stock = product.Stock
 
                 });
             var totalItems = await query.CountAsync(cancellationToken);
