@@ -195,6 +195,7 @@ Si on ne veut pas que ça modifie le code source, on peut utiliser l'option --ve
 dotnet format Inventory.slnx --verify-no-changes 
 
 
+
 ********
 // Azure
 
