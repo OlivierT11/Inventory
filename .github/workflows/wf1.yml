@@ -19,7 +19,7 @@ env:
   SOLUTION_FILE: ./Inventory_Api/Inventory.slnx
 
 jobs:
-  build-and-test:
+  build-and-test-backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -115,10 +115,42 @@ jobs:
           name: inventory-api-app
           path: ./publish
 
-  deploy:
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./Inventory_React
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: ./Inventory_React/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build React frontend
+        run: npm run build
+        env:
+          VITE_API_URL: https://inventory-e4f7ftgwccgnasag.francecentral-01.azurewebsites.net
+
+      - name: Upload frontend build
+        uses: actions/upload-artifact@v4
+        with:
+          name: inventory-frontend
+          path: ./Inventory_React/dist
+          
+  deploy-backend:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build-and-test #it will start after build-and-test
+    needs: build-and-test-backend #it will start after build-and-test
     
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -143,6 +175,35 @@ jobs:
         with:
           app-name: 'Inventory'
           package: ./publish
+
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build-frontend
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Download frontend artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: inventory-frontend
+          path: ./dist
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy frontend to Azure
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'Inventory-Frontend'
+          package: ./dist
           
   docker-compose:
     runs-on: ubuntu-latest
