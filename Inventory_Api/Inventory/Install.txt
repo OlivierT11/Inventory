@@ -200,5 +200,38 @@ dotnet format Inventory.slnx --verify-no-changes
 // Azure
 
 // Access DB from CLI
+Install azure cli on windows
+az login
+az logout
 
-//
+// Connect GitHub actions to azure
+1. add the GitHub actions code
+2. add the GitHub secrets (le client ID est celui de l'app sur azure, pas de l'user)
+3. azure > Microsoft Entra ID > App registrations > resister a user if none already > user > Certificates & secrets > Federated credentials > vérifier que la string corresponds :
+Azure : repo:OlivierT11@302779682/Inventory@1351579909:ref:refs/heads/main
+GitHub: repo:OlivierT11@302779682/Inventory@1351579909:ref:refs/heads/main
+
+// Azure secrets
+
+/ User
+Subscription ID: 
+5bd3904a-fcf0-4452-bf07-747b23c21801
+
+Client ID:
+7727ad4f-b132-4785-a255-763d4004264b
+
+Object (principal) ID:
+da69f096-74fa-450c-95c1-aecd390c5e10
+
+Tenant ID
+d90e59f7-f941-42f4-892a-5bb6fd449b24
+
+/ my app (Inventory)
+Application (client) ID
+8ea2c8e1-af77-4d54-8f05-322bba3084fe
+
+Directory (tenant) ID
+d90e59f7-f941-42f4-892a-5bb6fd449b24
+
+Object ID
+9b458209-0340-4044-a8ee-fc81c02c9ffc
