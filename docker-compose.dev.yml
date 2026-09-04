@@ -1,4 +1,4 @@
-#  This file is used by: docker-compose up --build 
+# This file is used by: docker compose -f docker-compose.dev.yml up -d --build
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest

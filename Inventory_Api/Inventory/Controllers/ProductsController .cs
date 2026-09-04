@@ -1,6 +1,8 @@
 ﻿using Inventory.DTOs;
+using Inventory.Models;
 using Inventory.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.Controllers;
 
@@ -37,6 +39,19 @@ public class ProductsController : ControllerBase
     {
         var products = await _service.GetAllAsync(cancellationToken);
         return Ok(products);
+    }
+
+    [HttpGet("paged")]
+    public async Task<ActionResult<ProductListDto>> GetWithPager(
+    [FromQuery] int page = 1,
+    CancellationToken cancellationToken = default)
+    {
+        if (page < 1)
+            page = 1;
+
+        var productListDto = await _service.GetWithPager(page, cancellationToken);
+
+        return Ok(productListDto);
     }
 
     /// <summary>

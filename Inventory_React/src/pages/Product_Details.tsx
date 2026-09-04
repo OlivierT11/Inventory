@@ -1,25 +1,51 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-function Home() {
-    return <h1>Home page</h1>;
-}
+type Product = {
+    id: number;
+    name: string;
+    price: number;
+    stock: number;
+};
 
-function About() {
-    return <h1>About page</h1>;
-}
 
 export default function Product_Details() {
-    return (
-        <BrowserRouter>
-            <nav>
-                <Link to="/Product_Add">Add a product</Link>{" "}
-                <Link to="/Product_List">Product List</Link>
-            </nav>
 
-            <Routes>
-                <Route path="/Product_Add" element={<Home />} />
-                <Route path="/Product_List" element={<About />} />
-            </Routes>
-        </BrowserRouter>
+    const [product, setProduct] = useState<Product>();
+    const [, setError] = useState("");
+
+    const { id } = useParams();
+
+    useEffect(() => {
+        fetch(`http://localhost:5293/api/products/${id}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error: ${response.status}`);
+                }
+
+                return response.json();
+            })
+            .then((data) => {
+                setProduct(data);
+            })
+            .catch((error) => {
+                setError(error.message);
+            });
+    }, []);
+
+    return (
+        <>
+            <div className="card-header">
+                <h1>Détails du produit</h1>
+            </div>
+            <section className="product-details-container">
+                <form className="product-form card">
+                    <p>Id: {product?.id}</p><br/>
+                    <p>Nom: {product?.name}</p><br/>
+                    <p>Prix: {product?.price}</p><br />
+                    <p>Stock: {product?.stock}</p><br />
+                </form>
+            </section>
+        </>
     );
 }

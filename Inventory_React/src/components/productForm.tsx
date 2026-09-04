@@ -60,8 +60,7 @@ export default function ProductForm() {
             }
 
             alert("Product created successfully.");
-            // resetForm();
-            window.location.reload();
+            resetForm();
 
         } catch (error) {
             console.error("Error creating product:", error);
@@ -74,41 +73,27 @@ export default function ProductForm() {
         <section className="content-grid">
             <form className="product-form card" onSubmit={handleSubmit}>
 
-                <h1>Add product form</h1>
-
-                <div className="card-header">
-                    <div>
-                        <h2>{editingId ? "Edit Product" : "Add Product"}</h2>
-
-                        <p>
-                            {editingId
-                                ? "Update the selected product."
-                                : "Add a new item to your inventory."}
-                        </p>
-                    </div>
-                </div>
-
                 <label>
-                    Product Name
+                    Nom
 
                     <input
                         name="name"
                         value={form.name}
                         onChange={handleInputChange}
-                        placeholder="e.g. Wireless Mouse"
+                        placeholder="ex. Wireless Mouse"
                         required
                     />
                 </label>
 
                 <label>
-                    Price
+                    Prix (€)
 
                     <input
                         type="number"
                         name="price"
                         value={form.price}
                         onChange={handleInputChange}
-                        placeholder="e.g. 12"
+                        placeholder="ex. 12"
                         min="0"
                         step="0.01"
                         required
@@ -116,14 +101,14 @@ export default function ProductForm() {
                 </label>
 
                 <label>
-                    Quantity
+                    Quantité
 
                     <input
                         type="number"
                         name="stock"
                         value={form.stock}
                         onChange={handleInputChange}
-                        placeholder="e.g. 52"
+                        placeholder="ex. 52"
                         min="0"
                         required
                     />
@@ -131,7 +116,7 @@ export default function ProductForm() {
 
                 <div className="form-actions">
                     <button type="submit" className="primary-button">
-                        {editingId ? "Save Changes" : "Add Product"}
+                        {editingId ? "Sauvegarder" : "Ajouter le produit"}
                     </button>
 
                     {editingId && (
@@ -140,7 +125,7 @@ export default function ProductForm() {
                             className="secondary-button"
                             onClick={resetForm}
                         >
-                            Cancel
+                            Annuler
                         </button>
                     )}
                 </div>

@@ -1,0 +1,52 @@
+# This file is used by: docker compose -f docker-compose.prod.yml up -d --build
+services:
+  # Create a docker service for the backend
+  api:
+    build:
+      context: ./Inventory_Api/Inventory
+      dockerfile: Dockerfile
+    container_name: inventory-api
+    # The front will call this port (curl will too)
+    ports:
+      - "5293:8080"
+    environment:
+      # makes ASP.NET load appsettings.Production.json
+      ASPNETCORE_ENVIRONMENT: Production
+
+  # Create a docker service for the frontend
+  client:
+    build:
+      context: ./Inventory_React
+      dockerfile: Dockerfile
+    container_name: inventory-client
+    # The client will run on this port (use in URL)
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+  # Create a docker service for the SQL database
+  # use these values in ConnectionStrings in appsettings.Production.json
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: inventory-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "InventoryDb2026Strong"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'InventoryDb2026Strong' -C -Q 'SELECT 1' || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+volumes:
+  sqlserver-data:

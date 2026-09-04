@@ -116,9 +116,22 @@ dotnet sln Project.sln add Project/Project.csproj
 // Docker
 créer un Dockerfile et un .dockerignore à la racine du projet ASP.NET et du projet React
 créer un docker-compose.yml à la racine de la solution (contient les 2 projets), et y mettre les 2 projets en tant que services
-aller dans le répertoire du docker-compose.yml et exécuter : docker-compose up --build
+aller dans le répertoire du docker-compose.yml et exécuter (pour la prod): 
+    docker compose -f docker-compose.prod.yml up -d --build
 corriger les erreurs de build et relancer la commande (note, les erreurs "var crée mais jamais utilisé" sont bloquantes ici, mais pas dans npm run dev)
 aller dans docker desktop > containers (il y a 2 containers) > choisir le container du projet react > cliquer sur "open in browser" pour ouvrir l'appli react dans le navigateur
+
+Si erreur "NetworkError when attempting to fetch resource."
+> dans appsettings.json du backend, autoriser l'IP du frontend: 
+    "AllowedOrigins": [
+      "http://localhost:5173"
+    ]
+
+Si erreur 500 : LocalDB is not supported on this platform.
+LocalDB est une fonctionnalité SQL Server disponible principalement sous Windows. L'application ASP.NET Core tourne probablement dans un conteneur Linux, où MSSQLLocalDB n’existe pas.
+
+Si erreur database:
+> cf les logs du service sql server : docker compose -f docker-compose.prod.yml logs sqlserver (ils sont aussi dans docker desktop)
 
 
 // changer d'environnement
@@ -180,3 +193,11 @@ dotnet format Inventory.slnx
     > attention, ça modifie le code source directement (enlève les espaces en trop etc), donc penser à vérifier les changements avant de commit
 Si on ne veut pas que ça modifie le code source, on peut utiliser l'option --verify-no-changes pour juste vérifier le code sans le modifier:
 dotnet format Inventory.slnx --verify-no-changes 
+
+
+********
+// Azure
+
+// Access DB from CLI
+
+//

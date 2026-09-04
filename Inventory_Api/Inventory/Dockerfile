@@ -7,6 +7,7 @@ USER ${APP_UID}
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
+# L’application backend doit écouter sur toutes les interfaces réseau
 ENV ASPNETCORE_URLS=http://+:8080
 
 

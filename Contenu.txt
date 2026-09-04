@@ -20,7 +20,9 @@ Github
 Transactions et gestion des erreurs (SQL Server)
 Auth JWT pour la sécurisation de l'API
 env dev/prod séparés
-Azure cloud pour le déploiement de l'application, avec Azure SQL et Azure Vault
+Azure cloud pour le déploiement de l'application
+	Azure SQL
+	Azure Vault
 Validation des données côté serveur et côté client
 Logs d’erreurs (ILogger)
 Notifications front après les opérations CRUD.
@@ -38,5 +40,6 @@ OpenAPI + Swagger UI pour tester les API
 cache appels API
 TU appels API
 front: login form + session
-joli front (blanc centré sur fond noir)
-SonarCloud et dotnet format
+transactions
+recherche avec filtres
+health check

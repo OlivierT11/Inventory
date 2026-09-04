@@ -38,4 +38,12 @@
     <!-- Test packages removed from main project to avoid conflicts with test project references -->
   </ItemGroup>
 
+  <!-- copy all the appsettings.*.json files in the publish directory -->
+  <!-- necessary because Dockerfile uses COPY -from=build /app/publish . -->
+  <ItemGroup>
+    <Content Update="appsettings*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

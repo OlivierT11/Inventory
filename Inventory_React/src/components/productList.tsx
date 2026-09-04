@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Product = {
     id: number;
@@ -12,6 +13,11 @@ export default function ProductList() {
     const [error, setError] = useState("");
     const [editingId, setEditingId] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [, setPageSize] = useState(10);
+    const [, setTotalItems] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const navigate = useNavigate();
 
 
     function cancelEditing() {
@@ -120,8 +126,14 @@ export default function ProductList() {
         }
     }
 
+
     useEffect(() => {
-        fetch("http://localhost:5293/api/products")
+
+        const params = new URLSearchParams({
+            page: String(currentPage)
+        });
+
+        fetch(`http://localhost:5293/api/products/paged?${params}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error: ${response.status}`);
@@ -130,69 +142,122 @@ export default function ProductList() {
                 return response.json();
             })
             .then((data) => {
-                setProducts(data);
+                setProducts(data.products);
+                setCurrentPage(data.currentPage);
+                setPageSize(data.pageSize);
+                setTotalItems(data.totalItems);
+                setTotalPages(data.totalPages);
             })
             .catch((error) => {
                 setError(error.message);
             });
-    }, []);
+    }, [currentPage]);
 
     return (
         <section className="products">
-            <h1>Products</h1>
+            <div className="card-header">
+                <h1>Liste des produits de l'inventaire</h1>
+            </div>
 
             {error && <p>{error}</p>}
 
             {/* ensure `loading` is read so TypeScript doesn't flag it as unused */}
             {loading && <p>Loading…</p>}
 
-            <ul>
-                {products.map((product) => (
-                    <li key={product.id}>
-                        <form className="product-form card" onSubmit={(event) => event.preventDefault()}>
-                            <div className="action-buttons">
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={product.name}
-                                    onChange={(event) =>
-                                        handleProductChange(product.id, event)
-                                    }
-                                />
-                                <input
-                                    type="number"
-                                    name="price"
-                                    value={product.price}
-                                    onChange={(event) =>
-                                        handleProductChange(product.id, event)
-                                    }
-                                />
-                                <input
-                                    type="number"
-                                    name="stock"
-                                    value={product.stock}
-                                    onChange={(event) =>
-                                        handleProductChange(product.id, event)
-                                    }
-                                />
-                                <button
-                                    className="edit-button"
-                                    onClick={() => handleEdit(product)}
-                                >
-                                    Edit
-                                </button>
+            <section className="content-grid">
+                <div className="product-list">
+                    <ul>
+                        {products.map((product) => (
+                            <li key={product.id}>
+                                <form className="product-form card" onSubmit={(event) => event.preventDefault()}>
+                                    <div className="action-buttons">
+                                        <button
+                                            onClick={() => navigate(`/Product_Details/${product.id}`)}>
+                                            Détails
+                                        </button>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={product.name}
+                                            onChange={(event) =>
+                                                handleProductChange(product.id, event)
+                                            }
+                                        />
+                                        <input
+                                            type="number"
+                                            name="price"
+                                            value={product.price}
+                                            onChange={(event) =>
+                                                handleProductChange(product.id, event)
+                                            }
+                                        />
+                                        <input
+                                            type="number"
+                                            name="stock"
+                                            value={product.stock}
+                                            onChange={(event) =>
+                                                handleProductChange(product.id, event)
+                                            }
+                                        />
+                                        <button
+                                            className="edit-button"
+                                            onClick={() => handleEdit(product)}
+                                        >
+                                            Modifier
+                                        </button>
 
+                                        <button
+                                            className="delete-button"
+                                            onClick={() => handleDelete(product.id)}
+                                        >
+                                            Supprimer
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </section>
+            <section className="pagination">
+                {totalPages > 0 && (
+                    <div>
+                        <button
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                        >
+                            Précédent
+                        </button>
+
+                        {Array.from({ length: totalPages }, (_, index) => {
+                            const pageNumber = index + 1;
+
+                            return (
                                 <button
-                                    className="delete-button"
-                                    onClick={() => handleDelete(product.id)}
+                                    key={pageNumber}
+                                    onClick={() => setCurrentPage(pageNumber)}
+                                    style={{
+                                        fontWeight: pageNumber === currentPage ? "bold" : "normal"
+                                    }}
                                 >
-                                    Delete
+                                    {pageNumber}
                                 </button>
-                            </div>
-                        </form>
-                    </li>
-                ))}
-            </ul>
+                            );
+                        })}
+
+                        <button
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                        >
+                            Suivant
+                        </button>
+
+                        <p>
+                            Page {currentPage} de {totalPages}
+                        </p>
+                    </div>
+                )}
+            </section>
         </section>
     );
 }

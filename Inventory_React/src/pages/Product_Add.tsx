@@ -1,24 +1,14 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import ProductForm from '../components/productForm';
-
-function Home() {
-    return <h1>Home page</h1>;
-}
-
 
 export default function Product_Add() {
     return (
         <>
-            <BrowserRouter>
-                <nav>
-                    <Link to="/Product_List">Product List</Link>
-                </nav>
-
-                <Routes>
-                    <Route path="/Product_List" element={<Home />} />
-                </Routes>
-            </BrowserRouter>
-            <ProductForm />
+            <div className="card-header">
+                <h1>Ajouter un produit à l'inventaire</h1>
+            </div>
+            <section className="product-list-container">
+                <ProductForm />
+            </section>
         </>
     );
 }

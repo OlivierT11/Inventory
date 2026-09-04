@@ -32,6 +32,45 @@ namespace Inventory.Services
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<ProductListDto> GetWithPager(
+            int page,
+            CancellationToken cancellationToken = default)
+        {
+            const int pageSize = 10;
+
+            // Compter le nombre total d'éléments dans la table Products
+            var query = _context.Products
+                .AsNoTracking()
+                .Select(product => new ProductResponseDto
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Stock = product.Stock 
+
+                });
+            var totalItems = await query.CountAsync(cancellationToken);
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            // Récupérer les produits pour la page demandée
+            var products = await query
+                .Skip((page - 1) * pageSize)  // Skip(20) ignore les 20 premiers produits.
+                .Take(pageSize) // Take(10) récupère au maximum 10 produits.
+                .ToListAsync(cancellationToken);
+
+            // Construire le DTO de réponse avec les informations de pagination
+            var productListDto = new ProductListDto
+            {
+                Products = products,
+                CurrentPage = page,
+                PageSize = pageSize,
+                TotalItems = totalItems,
+                TotalPages = totalPages
+            };
+
+            return productListDto;
+        }
+
         public async Task<ProductResponseDto?> GetByIdAsync(
             int id,
             CancellationToken cancellationToken = default)

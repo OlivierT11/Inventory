@@ -8,5 +8,11 @@ export default defineConfig({
             // Ignore Visual Studio workspace files (and other common noisy folders)
             ignored: ["**/.vs/**", "**/node_modules/**", "**/.git/**"],
         },
-    },
+        proxy: {
+            "/api": {
+                target: "http://backend:8080",
+                changeOrigin: true
+            }
+        },
+    }
 });

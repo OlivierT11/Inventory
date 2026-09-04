@@ -1,4 +1,5 @@
 ﻿using Inventory.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.Services
 {
@@ -6,6 +7,10 @@ namespace Inventory.Services
     public interface IProductService
     {
         Task<List<ProductResponseDto>> GetAllAsync(
+            CancellationToken cancellationToken = default);
+
+        Task<ProductListDto> GetWithPager(
+            int page,
             CancellationToken cancellationToken = default);
 
         Task<ProductResponseDto?> GetByIdAsync(
