@@ -19,7 +19,7 @@ Gestion du cache pour l'optimisation des performances
 Github
 Transactions et gestion des erreurs (SQL Server)
 Auth JWT pour la sécurisation de l'API
-env dev/prod séparés
+env dev/prod séparés (front, back, DB)
 Azure cloud pour le déploiement de l'application
 	Azure SQL
 	Azure Vault
@@ -34,12 +34,13 @@ Pipeline GitHub Actions pour l'intégration continue et le déploiement continu 
 	Images docker
 	Déploiement Azure cloud
 OpenAPI + Swagger UI pour tester les API
+Health check basique
 
 
 // TODO 
 cache appels API
-TU appels API
+TU appels API (pour l'instant c'est que openAPI/swagger)
 front: login form + session
 transactions
 recherche avec filtres
-health check
+health check avancé (cf ia)

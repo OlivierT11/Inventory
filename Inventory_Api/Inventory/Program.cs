@@ -126,7 +126,7 @@ app.UseAuthentication(); //jwt
 app.UseAuthorization();
 
 // health check
-app.MapGet("/api/health", () => Results.Ok(new { status = " healthy" }));
+app.MapGet("/api/health", () => Results.Ok(new { status = "healthy" }));
 
 app.MapControllers();
 
