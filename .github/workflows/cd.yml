@@ -1,0 +1,124 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+    branches:
+      - main
+
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  ACR_NAME: inventorycontrainer
+  ACR_LOGIN_SERVER: inventorycontrainer.azurecr.io
+  RESOURCE_GROUP: inventory_container_registry
+  IMAGE_TAG: ${{ github.sha }}
+  BACKEND_CONTAINER_APP: inventory-backend-container-app
+  FRONTEND_CONTAINER_APP: inventory-frontend-container-app
+
+jobs:
+
+  migrate-database:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }} #use ASP.NET client ID for DB
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Get GitHub Actions runner IP
+        id: runner-ip
+        run: echo "ip=$(curl -s https://api.ipify.org)" >> "$GITHUB_OUTPUT"
+
+      - name: Allow runner through Azure SQL firewall
+        run: |
+          az sql server firewall-rule create \
+            --resource-group Inventory-app \
+            --server inventory-app-database \
+            --name GitHubActions-${{ github.run_id }} \
+            --start-ip-address ${{ steps.runner-ip.outputs.ip }} \
+            --end-ip-address ${{ steps.runner-ip.outputs.ip }}
+
+      - name: Install EF Core CLI
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Restore dependencies
+        run: dotnet restore ./Inventory_Api/Inventory/Inventory.csproj
+
+      - name: Apply EF Core migrations
+        env:
+          AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        run: |
+          dotnet ef database update \
+            --project ./Inventory_Api/Inventory/Inventory.csproj \
+            --startup-project ./Inventory_Api/Inventory/Inventory.csproj \
+            --connection "$AZURE_SQL_CONNECTION_STRING"
+
+      - name: Remove GitHub Actions firewall rule
+        if: always()
+        run: |
+          az sql server firewall-rule delete \
+            --resource-group Inventory-app \
+            --server inventory-app-database \
+            --name GitHubActions-${{ github.run_id }}
+
+  build-and-push-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Log in to Azure Container Registry
+        run: |
+          az acr login --name "$ACR_NAME"
+
+      - name: Build backend image
+        run: |
+          docker build \
+            -f backend/Dockerfile \
+            -t "$ACR_LOGIN_SERVER/$BACKEND_CONTAINER_APP:$IMAGE_TAG" \
+            backend
+
+      - name: Build frontend image
+        run: |
+          docker build \
+            -f frontend/Dockerfile \
+            -t "$ACR_LOGIN_SERVER/$FRONTEND_CONTAINER_APP:$IMAGE_TAG" \
+            frontend
+
+      - name: Push backend image
+        run: |
+          docker push "$ACR_LOGIN_SERVER/$BACKEND_CONTAINER_APP:$IMAGE_TAG"
+
+      - name: Push frontend image
+        run: |
+          docker push "$ACR_LOGIN_SERVER/$FRONTEND_CONTAINER_APP:$IMAGE_TAG"

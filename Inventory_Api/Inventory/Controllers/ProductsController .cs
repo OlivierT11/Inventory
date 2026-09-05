@@ -11,9 +11,9 @@ namespace Inventory.Controllers;
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    private readonly IProductService _service;
+    private readonly IProductService2 _service;
 
-    public ProductsController(IProductService service)
+    public ProductsController(IProductService2 service)
     {
         _service = service;
     }
@@ -104,6 +104,11 @@ public class ProductsController : ControllerBase
         ProductUpdateDto dto,
         CancellationToken cancellationToken = default)
     {
+        if (id <= 0)
+        {
+            throw new ArgumentException("A valid product ID is required.");
+        }
+
         var updated = await _service.UpdateAsync(
             id,
             dto,
@@ -127,6 +132,11 @@ public class ProductsController : ControllerBase
         int id,
         CancellationToken cancellationToken = default)
     {
+        if (id <= 0)
+        {
+            throw new ArgumentException("A valid product ID is required.");
+        }
+
         var deleted = await _service.DeleteAsync(
             id,
             cancellationToken);

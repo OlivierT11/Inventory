@@ -1,0 +1,173 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: aspnet-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read # allows SonarCloud to decorate PRs with analysis results
+
+env:
+  DOTNET_VERSION: 10.0.x
+  CONFIGURATION: Release
+  SOLUTION_FILE: ./Inventory_Api/Inventory.slnx
+
+jobs:
+  build-and-test-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      # SonarCloud start
+      # Automatic Analysis must be disabled in SonarCloud
+      - name: Install SonarScanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Begin SonarCloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: >
+          dotnet-sonarscanner begin
+          /k:"${{ secrets.SONAR_PROJECT_KEY }}"
+          /o:"${{ secrets.SONAR_ORGANIZATION }}"
+          /d:sonar.token="$SONAR_TOKEN"
+          /d:sonar.cs.opencover.reportsPaths="./TestResults/**/coverage.opencover.xml"
+          
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.SOLUTION_FILE }}
+
+      # this step will fail if there are format changes to make
+      - name: Format check
+        run: dotnet format ${{ env.SOLUTION_FILE }} --verify-no-changes --no-restore
+        
+      - name: Build
+        run: dotnet build ${{ env.SOLUTION_FILE }} --configuration ${{ env.CONFIGURATION }} --no-restore
+
+      - name: Run tests with coverage
+        run: >
+          dotnet test ${{ env.SOLUTION_FILE }}
+          --configuration ${{ env.CONFIGURATION }}
+          --no-build
+          --verbosity normal
+          --logger "trx;LogFileName=test-results.trx"
+          --results-directory "./TestResults"
+          --collect:"XPlat Code Coverage"
+
+      # sonarcloud end
+      # This should be placed here, before the test results are generated, or else SonarCloud will analyse them too.
+      - name: Finish SonarCloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+        
+      - name: Upload test and coverage results as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-and-coverage
+          path: |
+            ./TestResults/**/*.trx
+            ./TestResults/**/coverage.cobertura.xml
+          if-no-files-found: warn
+
+      - name: Install ReportGenerator
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+      
+      - name: Generate human-readable HTML coverage report from coverage.cobertura.xml
+        run: >
+          reportgenerator
+          -reports:./TestResults/**/coverage.cobertura.xml
+          -targetdir:./coverage-report
+          -reporttypes:Html
+      
+      - name: Upload HTML coverage report as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./coverage-report
+        
+      - name: Publish application
+        run: >
+          dotnet publish
+          ./Inventory_Api/Inventory/Inventory.csproj
+          --configuration ${{ env.CONFIGURATION }}
+          --no-build
+          --output ./publish
+
+      # To retain or inspect the published files. Not required for deployment.
+      - name: Upload published application as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: inventory-api-app
+          path: ./publish
+
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./Inventory_React
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: ./Inventory_React/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build React frontend
+        run: npm run build
+        env:
+          VITE_API_URL: https://inventory-frontend-efdabshchnffhme6.francecentral-01.azurewebsites.net
+
+      - name: Upload frontend build
+        uses: actions/upload-artifact@v4
+        with:
+          name: inventory-frontend
+          path: ./Inventory_React/dist
+
+  
+  docker-compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Compose services
+        run: docker compose build
+
+      - name: Start services
+        run: docker compose up -d
+
+      - name: Show running containers
+        run: docker compose ps
+
+      - name: Show logs
+        if: failure()
+        run: docker compose logs
+
+      - name: Stop services
+        if: always()
+        run: docker compose down

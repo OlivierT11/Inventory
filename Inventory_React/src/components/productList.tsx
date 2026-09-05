@@ -44,6 +44,8 @@ export default function ProductList() {
         console.log("Product to update:", product);
 
         // Validate
+        const productId = Number(product.id);
+        const productName = product.name.trim();
         const priceNum = Number(product.price);
         const stockNum = Number(product.stock);
 
@@ -53,9 +55,9 @@ export default function ProductList() {
         }
 
         const updatedProduct = {
-            name: product.name.trim(),
-            price: Number(product.price),
-            stock: Number(product.stock),
+            name: productName,
+            price: priceNum,
+            stock: stockNum,
         };
 
         const apiUrl = import.meta.env.VITE_API_URL;
@@ -63,7 +65,7 @@ export default function ProductList() {
         try {
             setLoading(true);
 
-            const response = await fetch(`${apiUrl}/api/products/${product.id}`, {
+            const response = await fetch(`${apiUrl}/api/products/${productId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

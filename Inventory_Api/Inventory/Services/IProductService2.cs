@@ -6,10 +6,28 @@ namespace Inventory.Services
     // Handles business logic. Calls the repository
     public interface IProductService2
     {
-        Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-        Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default);
-        Task<Product> CreateAsync(Product product, CancellationToken cancellationToken = default);
-        Task<Product?> UpdateAsync(Product product, CancellationToken cancellationToken = default);
-        Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
+        Task<List<ProductResponseDto>> GetAllAsync(
+            CancellationToken cancellationToken = default);
+
+        Task<ProductListDto> GetWithPager(
+            int page,
+            CancellationToken cancellationToken = default);
+
+        Task<ProductResponseDto?> GetByIdAsync(
+            int id,
+            CancellationToken cancellationToken = default);
+
+        Task<ProductResponseDto> CreateAsync(
+            ProductCreateDto dto,
+            CancellationToken cancellationToken = default);
+
+        Task<bool> UpdateAsync(
+            int id,
+            ProductUpdateDto dto,
+            CancellationToken cancellationToken = default);
+
+        Task<bool> DeleteAsync(
+            int id,
+            CancellationToken cancellationToken = default);
     }
 }

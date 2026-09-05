@@ -1,10 +1,11 @@
 using Inventory.Data;
+using Inventory.Models;
 using Inventory.Repositories;
 using Inventory.Services;
-using Inventory.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -58,6 +59,11 @@ builder.Services.AddAuthorization(); //jwt
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
+// basic health checks
+builder.Services.AddHealthChecks()
+    .AddCheck("self", () => HealthCheckResult.Healthy()) // app health check
+    .AddDbContextCheck<AppDbContext>(); // database health check
+
 // CORS (for frontend calls)
 builder.Services.AddCors(options =>
 {
@@ -70,7 +76,8 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductService2, ProductService2>();
+builder.Services.AddScoped<IProductRepository2, ProductRepository2>();
 builder.Services.AddScoped<JwtTokenService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -126,7 +133,7 @@ app.UseAuthentication(); //jwt
 app.UseAuthorization();
 
 // health check
-app.MapGet("/api/health", () => Results.Ok(new { status = "healthy" }));
+app.MapHealthChecks("/api/health"); //"Healthy" means both the app and the database will be healthy
 
 app.MapControllers();
 

@@ -1,32 +1,72 @@
-# React + TypeScript + Vite
+# Inventory React
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A small inventory management frontend built with React, TypeScript and Vite. Intended to work with an ASP.NET Core products API backend. Includes a production-ready build served by nginx and a Dockerfile for container builds.
 
-Currently, two official plugins are available:
+## Features
+- TypeScript + React
+- Vite dev server with HMR
+- SPA routing with `react-router-dom`
+- Dockerfile for multi-stage production build
+- Simple product add / list / edit / delete UI
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Prerequisites
+- Node.js 18+ (or use Docker)
+- npm
+- A backend API at `http://localhost:5293` (or configure via env)
 
-## React Compiler
+## Quick start (development)
+1. Install dependencies
+npm ci
+2. Start dev server
+npm run dev
+3. Open `http://localhost:5173` in your browser.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+If the HMR websocket fails (common with some editors/OS locks), restart the dev server or add watcher ignores in `vite.config.ts` (example already included).
 
-## Expanding the Oxlint configuration
+## Build (production)
+Generate a production build:
+npm run build
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+Preview the build locally:
+npm run preview
+opens at http://localhost:5173 by default
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Docker (production)
+The repository includes a multi-stage Dockerfile which builds the app and serves it with nginx.
+
+Build the image:
+docker build -t inventory-react .
+
+Run the container (expose port 80):
+docker run -p 80:80 inventory-react
+
+Environment note: the Dockerfile supports an optional build argument `VITE_API_URL` used to set a `VITE_API_URL` var for the Vite build if you need to point the client to a different API:
+docker build --build-arg VITE_API_URL="https://api.example.com" -t inventory-react .
+
+
+## Project structure (key files)
+- `src/` — React + TypeScript source
+- `src/components/` — UI components (`productForm`, `productList`, ...)
+- `src/pages/` — routed pages
+- `index.html` — app entry
+- `src/main.tsx` — React mounting
+- `package.json` — npm scripts:
+  - `dev` — start Vite dev server
+  - `build` — TypeScript build + Vite production build
+  - `preview` — preview built assets
+- `Dockerfile` — multi-stage build + nginx
+- `nginx.conf` — SPA fallback for client-side routing
+
+## Common issues & tips
+- If Vite reports file-watch errors on Windows related to Visual Studio (`.vs`), add `.vs` to the watcher ignore list in `vite.config.ts` or add a `.dockerignore` to avoid sending `.vs` into Docker build context.
+- If TypeScript errors block `npm run build` during CI/Docker builds, address all TS errors (unused variables, types) or adjust `tsconfig` only with caution.
+- Ensure the backend API is reachable and CORS is configured when developing from a different host/port.
+
+## Contributing
+- Create feature branches from `main`
+- Follow TypeScript and React patterns already used in the codebase
+- Open PR with description and testing steps
+
+## License
+See the main license file (`LICENSE`) for this repository.
