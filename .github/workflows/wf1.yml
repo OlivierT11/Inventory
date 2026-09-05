@@ -24,10 +24,10 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -75,7 +75,7 @@ jobs:
         
       - name: Upload test and coverage results as artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: test-and-coverage
           path: |
@@ -95,7 +95,7 @@ jobs:
       
       - name: Upload HTML coverage report as artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: coverage-report
           path: ./coverage-report
@@ -110,7 +110,7 @@ jobs:
 
       # To retain or inspect the published files. Not required for deployment.
       - name: Upload published application as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: inventory-api-app
           path: ./publish
@@ -124,10 +124,10 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: npm
@@ -142,7 +142,7 @@ jobs:
           VITE_API_URL: https://inventory-frontend-efdabshchnffhme6.francecentral-01.azurewebsites.net
 
       - name: Upload frontend build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: inventory-frontend
           path: ./Inventory_React/dist
@@ -161,10 +161,10 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
 
@@ -210,6 +210,7 @@ jobs:
             --resource-group Inventory-app \
             --server inventory-app-database \
             --name GitHubActions-${{ github.run_id }}
+            || true
 
   deploy-backend:
     runs-on: ubuntu-latest
@@ -224,7 +225,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: inventory-api-app
           path: ./publish
@@ -255,7 +256,7 @@ jobs:
 
     steps:
       - name: Download frontend artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: inventory-frontend
           path: ./dist
@@ -278,7 +279,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build Docker Compose services
         run: docker compose build
