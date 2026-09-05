@@ -139,7 +139,7 @@ jobs:
       - name: Build React frontend
         run: npm run build
         env:
-          VITE_API_URL: https://inventory-e4f7ftgwccgnasag.francecentral-01.azurewebsites.net
+          VITE_API_URL: https://inventory-frontend-efdabshchnffhme6.francecentral-01.azurewebsites.net
 
       - name: Upload frontend build
         uses: actions/upload-artifact@v4
@@ -171,7 +171,7 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }} #use ASP.NET client ID
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
