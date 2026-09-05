@@ -16,8 +16,10 @@ export default function Product_Details() {
 
     const { id } = useParams();
 
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
-        fetch(`http://localhost:5293/api/products/${id}`)
+        fetch(`${ apiUrl }/api/products/${id}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error: ${response.status}`);

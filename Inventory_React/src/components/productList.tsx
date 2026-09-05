@@ -58,10 +58,12 @@ export default function ProductList() {
             stock: Number(product.stock),
         };
 
+        const apiUrl = import.meta.env.VITE_API_URL;
+
         try {
             setLoading(true);
 
-            const response = await fetch(`http://localhost:5293/api/products/${product.id}`, {
+            const response = await fetch(`${apiUrl}/api/products/${product.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -97,12 +99,14 @@ export default function ProductList() {
             "Are you sure you want to delete this product?"
         );
 
+        const apiUrl = import.meta.env.VITE_API_URL;
+
         if (!confirmed) return;
 
         try {
             setLoading(true);
 
-            const response = await fetch(`http://localhost:5293/api/products/${id}`, {
+            const response = await fetch(`${apiUrl}/api/products/${id}`, {
                 method: "DELETE",
             });
 
@@ -133,7 +137,9 @@ export default function ProductList() {
             page: String(currentPage)
         });
 
-        fetch(`http://localhost:5293/api/products/paged?${params}`)
+        const apiUrl = import.meta.env.VITE_API_URL;
+
+        fetch(`${apiUrl}/api/products/paged?${params}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error: ${response.status}`);

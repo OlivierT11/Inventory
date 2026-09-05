@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\.env.production||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:.env.production||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\pages\\product_list.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\pages\\product_list.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\nginx.conf||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:nginx.conf||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\pages\\product_details.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\pages\\product_details.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\pages\\product_add.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\pages\\product_add.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\components\\productlist.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
@@ -25,6 +25,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\components\\productform.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\components\\productform.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\vite.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:vite.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\pages\\product_list.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\pages\\product_list.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\pages\\product_add.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\pages\\product_add.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -46,8 +62,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": ".env.production",
+              "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\.env.production",
+              "RelativeDocumentMoniker": ".env.production",
+              "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\.env.production",
+              "RelativeToolTip": ".env.production",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-09-04T16:04:36.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\Dockerfile",
+              "RelativeDocumentMoniker": "Dockerfile",
+              "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\Dockerfile",
+              "RelativeToolTip": "Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-09-04T15:58:07.263Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "nginx.conf",
+              "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\nginx.conf",
+              "RelativeDocumentMoniker": "nginx.conf",
+              "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\nginx.conf",
+              "RelativeToolTip": "nginx.conf",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-09-04T15:56:02.747Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "vite.config.ts",
+              "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\vite.config.ts",
+              "RelativeDocumentMoniker": "vite.config.ts",
+              "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\vite.config.ts",
+              "RelativeToolTip": "vite.config.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-09-04T15:51:37.611Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 5,
@@ -56,13 +124,14 @@
               "RelativeDocumentMoniker": "src\\components\\productForm.tsx",
               "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\components\\productForm.tsx",
               "RelativeToolTip": "src\\components\\productForm.tsx",
-              "ViewState": "AgIAACsAAAAAAAAAAAD4vz0AAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAkwDIAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-09-03T09:16:19.471Z"
+              "WhenOpened": "2026-09-03T09:16:19.471Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "index.css",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\index.css",
               "RelativeDocumentMoniker": "src\\index.css",
@@ -74,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "App.css",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\App.css",
               "RelativeDocumentMoniker": "src\\App.css",
@@ -86,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "main.tsx",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\main.tsx",
               "RelativeDocumentMoniker": "src\\main.tsx",
@@ -98,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
               "Title": "Product_List.tsx",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\pages\\Product_List.tsx",
               "RelativeDocumentMoniker": "src\\pages\\Product_List.tsx",
@@ -106,12 +175,11 @@
               "RelativeToolTip": "src\\pages\\Product_List.tsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-08-31T19:48:17.136Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-31T19:48:17.136Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "Product_Add.tsx",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\pages\\Product_Add.tsx",
               "RelativeDocumentMoniker": "src\\pages\\Product_Add.tsx",
@@ -119,18 +187,17 @@
               "RelativeToolTip": "src\\pages\\Product_Add.tsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-08-31T19:47:02.606Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-31T19:47:02.606Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Product_Details.tsx",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\pages\\Product_Details.tsx",
               "RelativeDocumentMoniker": "src\\pages\\Product_Details.tsx",
               "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\pages\\Product_Details.tsx",
               "RelativeToolTip": "src\\pages\\Product_Details.tsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2026-08-31T19:46:47.418Z",
               "EditorCaption": ""
@@ -143,20 +210,20 @@
               "RelativeDocumentMoniker": "src\\components\\productList.tsx",
               "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\components\\productList.tsx",
               "RelativeToolTip": "src\\components\\productList.tsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAlwIsAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2026-08-30T12:15:54.206Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "App.tsx",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\App.tsx",
               "RelativeDocumentMoniker": "src\\App.tsx",
               "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\App.tsx",
               "RelativeToolTip": "src\\App.tsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2026-08-29T09:23:10.331Z",
               "EditorCaption": ""

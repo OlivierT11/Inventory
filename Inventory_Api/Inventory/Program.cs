@@ -85,6 +85,16 @@ builder.Logging.AddDebug();
 
 var app = builder.Build();
 
+// Apply database migrations automatically in Docker
+if (app.Environment.IsEnvironment("Docker"))
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        dbContext.Database.Migrate();
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -114,6 +124,9 @@ app.UseCors("ReactApp");
 
 app.UseAuthentication(); //jwt
 app.UseAuthorization();
+
+// health check
+app.MapGet("/api/health", () => Results.Ok(new { status = " healthy" }));
 
 app.MapControllers();
 

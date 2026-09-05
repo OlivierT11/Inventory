@@ -10,8 +10,8 @@ services:
     ports:
       - "5293:8080"
     environment:
-      # makes ASP.NET load appsettings.Production.json
-      ASPNETCORE_ENVIRONMENT: Production
+      # makes ASP.NET load appsettings.Docker.json
+      ASPNETCORE_ENVIRONMENT: Docker
 
   # Create a docker service for the frontend
   client:

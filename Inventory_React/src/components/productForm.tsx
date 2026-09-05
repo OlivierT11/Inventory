@@ -45,8 +45,10 @@ export default function ProductForm() {
             stock: Number(form.stock)
         };
 
+        const apiUrl = import.meta.env.VITE_API_URL;
+
         try {
-            const response = await fetch("http://localhost:5293/api/products", {
+            const response = await fetch(`${apiUrl}/api/products`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\components\\productlist.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\components\\productlist.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\pages\\product_list.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\pages\\product_list.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\components\\productform.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\components\\productform.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\pages\\product_details.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\pages\\product_details.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\pages\\product_add.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\pages\\product_add.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\components\\productlist.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\components\\productlist.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\components\\productform.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\components\\productform.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -25,14 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\pages\\product_details.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\pages\\product_details.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|solutionrelative:src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8DB79CCA-658E-066C-862B-34BAA7426E8A}|inventory_react.esproj|c:\\users\\marec\\documents\\visual studio 18\\project\\inventory\\inventory_react\\src\\main.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
@@ -46,11 +46,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "productForm.tsx",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\components\\productForm.tsx",
               "RelativeDocumentMoniker": "src\\components\\productForm.tsx",
@@ -58,12 +58,11 @@
               "RelativeToolTip": "src\\components\\productForm.tsx",
               "ViewState": "AgIAACsAAAAAAAAAAAD4vz0AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-09-03T09:16:19.471Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-03T09:16:19.471Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "index.css",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\index.css",
               "RelativeDocumentMoniker": "src\\index.css",
@@ -71,12 +70,11 @@
               "RelativeToolTip": "src\\index.css",
               "ViewState": "AgIAADYAAAAAAAAAAAAAAEgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-09-03T08:34:25.246Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-03T08:34:25.246Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "App.css",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\App.css",
               "RelativeDocumentMoniker": "src\\App.css",
@@ -84,8 +82,7 @@
               "RelativeToolTip": "src\\App.css",
               "ViewState": "AgIAAHAAAAAAAAAAAAAUwIsAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-09-03T08:19:07.888Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-03T08:19:07.888Z"
             },
             {
               "$type": "Document",
@@ -97,8 +94,7 @@
               "RelativeToolTip": "src\\main.tsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2026-09-03T08:14:26.821Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-03T08:14:26.821Z"
             },
             {
               "$type": "Document",
@@ -108,7 +104,7 @@
               "RelativeDocumentMoniker": "src\\pages\\Product_List.tsx",
               "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\pages\\Product_List.tsx",
               "RelativeToolTip": "src\\pages\\Product_List.tsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2026-08-31T19:48:17.136Z",
               "EditorCaption": ""
@@ -121,46 +117,46 @@
               "RelativeDocumentMoniker": "src\\pages\\Product_Add.tsx",
               "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\pages\\Product_Add.tsx",
               "RelativeToolTip": "src\\pages\\Product_Add.tsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2026-08-31T19:47:02.606Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "Product_Details.tsx",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\pages\\Product_Details.tsx",
               "RelativeDocumentMoniker": "src\\pages\\Product_Details.tsx",
               "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\pages\\Product_Details.tsx",
               "RelativeToolTip": "src\\pages\\Product_Details.tsx",
-              "ViewState": "AgIAABQAAAAAAAAAAAAQwCwAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2026-08-31T19:46:47.418Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "productList.tsx",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\components\\productList.tsx",
               "RelativeDocumentMoniker": "src\\components\\productList.tsx",
               "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\components\\productList.tsx",
               "RelativeToolTip": "src\\components\\productList.tsx",
-              "ViewState": "AgIAABYAAAAAAAAAAAAgwAsAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2026-08-30T12:15:54.206Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "App.tsx",
               "DocumentMoniker": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\App.tsx",
               "RelativeDocumentMoniker": "src\\App.tsx",
               "ToolTip": "C:\\Users\\marec\\Documents\\Visual Studio 18\\Project\\Inventory\\Inventory_React\\src\\App.tsx",
               "RelativeToolTip": "src\\App.tsx",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2026-08-29T09:23:10.331Z",
               "EditorCaption": ""
