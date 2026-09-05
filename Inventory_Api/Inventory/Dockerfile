@@ -3,8 +3,8 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 COPY . .
-RUN dotnet restore ./Inventory_Api/Inventory/Inventory.csproj
-RUN dotnet publish ./Inventory_Api/Inventory/Inventory.csproj \
+RUN dotnet restore Inventory.csproj
+RUN dotnet publish Inventory.csproj \
     -c Release \
     -o /app/publish \
     --no-restore

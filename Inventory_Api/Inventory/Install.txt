@@ -237,7 +237,7 @@ d90e59f7-f941-42f4-892a-5bb6fd449b24
 Service principal object ID 
 dd936fc6-d605-47d9-aada-fc3b5fa5b0aa
 
-/ my app (Inventory)
+/ my app (Inventory backend)
 Application (client) ID
 8ea2c8e1-af77-4d54-8f05-322bba3084fe
 
@@ -247,6 +247,15 @@ d90e59f7-f941-42f4-892a-5bb6fd449b24
 Object ID
 9b458209-0340-4044-a8ee-fc81c02c9ffc
 
+/ my app (Inventory frontend)
+Application (client) ID
+01927437-0a0e-4b6c-a205-29e3e90acb7d
+
+Directory (tenant) ID
+d90e59f7-f941-42f4-892a-5bb6fd449b24
+
+Object ID
+1fad7b64-1f5c-4096-a7da-405ec33761e3
 
 // open azure webapp in browser
 https://backend.azurewebsites.net/api/products   (sans port)
