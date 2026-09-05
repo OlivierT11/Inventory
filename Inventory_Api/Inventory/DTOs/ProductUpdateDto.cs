@@ -4,7 +4,7 @@ namespace Inventory.DTOs
 {
     public class ProductUpdateDto
     {
-        [Required] 
+        [Required]
         [Range(1, int.MaxValue)] // validation to ensure Id is positive
         public int Id { get; set; }
 
