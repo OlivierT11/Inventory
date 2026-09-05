@@ -146,11 +146,79 @@ jobs:
         with:
           name: inventory-frontend
           path: ./Inventory_React/dist
-          
+
+  
+  migrate-database:
+    runs-on: ubuntu-latest
+    needs: 
+      - build-and-test-backend
+      - build-frontend
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Get GitHub Actions runner IP
+        id: runner-ip
+        run: echo "ip=$(curl -s https://api.ipify.org)" >> "$GITHUB_OUTPUT"
+
+      - name: Allow runner through Azure SQL firewall
+        run: |
+          az sql server firewall-rule create \
+            --resource-group my-resource-group \
+            --server inventory-sql-server \
+            --name GitHubActions-${{ github.run_id }} \
+            --start-ip-address ${{ steps.runner-ip.outputs.ip }} \
+            --end-ip-address ${{ steps.runner-ip.outputs.ip }}
+
+      - name: Install EF Core CLI
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Restore dependencies
+        run: dotnet restore ./Inventory_Api/Inventory/Inventory.csproj
+
+      - name: Apply EF Core migrations
+        env:
+          AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        run: |
+          dotnet ef database update \
+            --project ./Inventory_Api/Inventory/Inventory.csproj \
+            --startup-project ./Inventory_Api/Inventory/Inventory.csproj \
+            --connection "$AZURE_SQL_CONNECTION_STRING"
+
+      - name: Remove GitHub Actions firewall rule
+        if: always()
+        run: |
+          az sql server firewall-rule delete \
+            --resource-group Inventory-app \
+            --server inventory-app-database \
+            --name GitHubActions-${{ github.run_id }} \
+            --yes
+
+            
   deploy-backend:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build-and-test-backend #it will start after build-and-test
+    needs: 
+      - build-and-test-backend #it will start after build-and-test
+      - migrate-database
     
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -179,7 +247,9 @@ jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build-frontend
+    needs: 
+      - build-frontend
+      - migrate-database
 
     permissions:
       id-token: write
@@ -204,7 +274,7 @@ jobs:
         with:
           app-name: 'Inventory-Frontend'
           package: ./dist
-          
+
   docker-compose:
     runs-on: ubuntu-latest
 
