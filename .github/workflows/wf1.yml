@@ -182,8 +182,8 @@ jobs:
       - name: Allow runner through Azure SQL firewall
         run: |
           az sql server firewall-rule create \
-            --resource-group my-resource-group \
-            --server inventory-sql-server \
+            --resource-group Inventory-app \
+            --server inventory-app-database \
             --name GitHubActions-${{ github.run_id }} \
             --start-ip-address ${{ steps.runner-ip.outputs.ip }} \
             --end-ip-address ${{ steps.runner-ip.outputs.ip }}
@@ -209,10 +209,8 @@ jobs:
           az sql server firewall-rule delete \
             --resource-group Inventory-app \
             --server inventory-app-database \
-            --name GitHubActions-${{ github.run_id }} \
-            --yes
+            --name GitHubActions-${{ github.run_id }}
 
-            
   deploy-backend:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
