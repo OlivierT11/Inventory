@@ -11,7 +11,7 @@ type Product = {
 export default function ProductList() {
     const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState("");
-    const [editingId, setEditingId] = useState<number | null>(null);
+    //const [editingId, setEditingId] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [, setPageSize] = useState(10);
@@ -20,9 +20,9 @@ export default function ProductList() {
     const navigate = useNavigate();
 
 
-    function cancelEditing() {
-        setEditingId(null);
-    }
+    //function cancelEditing() {
+    //    setEditingId(null);
+    //}
 
     function handleProductChange(id: number, event: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target;
