@@ -1,5 +1,5 @@
 ﻿using Inventory.DTOs;
-using Microsoft.AspNetCore.Mvc;
+using Inventory.Models;
 
 namespace Inventory.Services
 {

@@ -4,7 +4,7 @@ using Inventory.Models;
 namespace Inventory.Repositories
 {
     // Handles database calls
-    public interface IProductRepository2
+    public interface IProductRepository
     {
         Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         Task<List<Product>> GetAllAsync(CancellationToken cancellationToken = default);

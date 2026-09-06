@@ -6,18 +6,18 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Inventory.Repositories
 {
-    public class ProductRepository2 : IProductRepository2
+    public class ProductRepository : IProductRepository
     {
         private readonly AppDbContext _context;
         private readonly DbSet<Product> _products;
-        private readonly ILogger<ProductRepository2> _logger;
+        private readonly ILogger<ProductRepository> _logger;
         private readonly TimeSpan _timeout;
         private readonly IMemoryCache _cache;
 
 
-        public ProductRepository2(
+        public ProductRepository(
             AppDbContext context,
-            ILogger<ProductRepository2> logger,
+            ILogger<ProductRepository> logger,
             IMemoryCache cache,
             TimeSpan? timeout = null)
         {
@@ -272,6 +272,10 @@ namespace Inventory.Repositories
                 {
                     return false;
                 }
+
+                updatedProduct.Name = product.Name;
+                updatedProduct.Price = product.Price;
+                updatedProduct.Stock = product.Stock;
 
                 await _context.SaveChangesAsync(cancellationToken);
 

@@ -55,6 +55,7 @@ export default function ProductList() {
         }
 
         const updatedProduct = {
+            id: productId,
             name: productName,
             price: priceNum,
             stock: stockNum,
@@ -79,15 +80,16 @@ export default function ProductList() {
             }
 
             // If the API returns the updated product
-            const productFromApi = await response.json();
+            // const productFromApi = await response.json();
 
-            setProducts((currentProducts) =>
-                currentProducts.map((product) =>
-                    product.id === editingId ? productFromApi : product
-                )
-            );
-
-            cancelEditing();
+            // setProducts((currentProducts) =>
+            //     currentProducts.map((product) =>
+            //         product.id === editingId ? productFromApi : product
+            //     )
+            // );
+            // if (editingId === id) {
+            //     cancelEditing();
+            // }
             alert("Product updated successfully.");
         } catch (err: any) {
             setError(err.message);
@@ -121,9 +123,9 @@ export default function ProductList() {
                 currentProducts.filter((product) => product.id !== id)
             );
 
-            if (editingId === id) {
-                cancelEditing();
-            }
+            // if (editingId === id) {
+            //     cancelEditing();
+            // }
             alert("Product deleted successfully.");
         } catch (err: any) {
             setError(err.message);

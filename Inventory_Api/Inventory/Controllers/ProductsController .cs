@@ -11,9 +11,9 @@ namespace Inventory.Controllers;
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    private readonly IProductService2 _service;
+    private readonly IProductService _service;
 
-    public ProductsController(IProductService2 service)
+    public ProductsController(IProductService service)
     {
         _service = service;
     }

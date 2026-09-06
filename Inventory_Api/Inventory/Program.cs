@@ -76,8 +76,8 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddScoped<IProductService2, ProductService2>();
-builder.Services.AddScoped<IProductRepository2, ProductRepository2>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<JwtTokenService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();

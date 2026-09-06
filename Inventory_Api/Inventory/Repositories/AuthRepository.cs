@@ -9,12 +9,12 @@ namespace Inventory.Repositories
     {
         private readonly AppDbContext _context;
         private readonly DbSet<User> _user;
-        private readonly ILogger<ProductRepository2> _logger;
+        private readonly ILogger<ProductRepository> _logger;
         private readonly TimeSpan _timeout;
 
         public AuthRepository(
             AppDbContext context,
-            ILogger<ProductRepository2> logger,
+            ILogger<ProductRepository> logger,
             TimeSpan? timeout = null)
         {
             _context = context;

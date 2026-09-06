@@ -1,6 +1,7 @@
 ﻿using Inventory.Data;
 using Inventory.DTOs;
 using Inventory.Models;
+using Inventory.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -8,118 +9,39 @@ namespace Inventory.Services
 {
     public class ProductService : IProductService
     {
-        private readonly AppDbContext _context;
-        private readonly IMemoryCache _cache;
+        private readonly IProductRepository _productRepository;
 
-        public ProductService(AppDbContext context, IMemoryCache cache)
+        public ProductService(IProductRepository productRepository)
         {
-            _context = context;
-            _cache = cache;
+            _productRepository = productRepository;
         }
 
-        public async Task<List<ProductResponseDto>> GetAllAsync(
-            CancellationToken cancellationToken = default)
+        public async Task<List<ProductResponseDto>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await _context.Products
-                .AsNoTracking()
-                .Select(product => new ProductResponseDto
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Price = product.Price,
-                    Stock = product.Stock
-                })
-                .ToListAsync(cancellationToken);
-        }
 
-        public async Task<ProductListDto> GetWithPager(
-            int page,
-            CancellationToken cancellationToken = default)
-        {
-            const int pageSize = 10;
-
-            // Compter le nombre total d'éléments dans la table Products
-            var query = _context.Products
-                .AsNoTracking()
-                .Select(product => new ProductResponseDto
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Price = product.Price,
-                    Stock = product.Stock
-
-                });
-            var totalItems = await query.CountAsync(cancellationToken);
-            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-
-            // Récupérer les produits pour la page demandée
-            var products = await query
-                .Skip((page - 1) * pageSize)  // Skip(20) ignore les 20 premiers produits.
-                .Take(pageSize) // Take(10) récupère au maximum 10 produits.
-                .ToListAsync(cancellationToken);
-
-            // Construire le DTO de réponse avec les informations de pagination
-            var productListDto = new ProductListDto
+            var products = await _productRepository.GetAllAsync(cancellationToken);
+            return products.Select(p => new ProductResponseDto
             {
-                Products = products,
-                CurrentPage = page,
-                PageSize = pageSize,
-                TotalItems = totalItems,
-                TotalPages = totalPages
-            };
-
-            return productListDto;
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                Stock = p.Stock
+            }).ToList();
         }
 
-        public async Task<ProductResponseDto?> GetByIdAsync(
-            int id,
-            CancellationToken cancellationToken = default)
+        public async Task<ProductListDto> GetWithPager(int page, CancellationToken cancellationToken = default)
         {
-            string cacheKey = $"product:{id}";
+            return await _productRepository.GetWithPager(page, cancellationToken);
+        }
 
-            if (_cache.TryGetValue<ProductResponseDto>(cacheKey, out var cachedProduct))
+        public async Task<ProductResponseDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+
+            var product = await _productRepository.GetByIdAsync(id, cancellationToken);
+            if (product == null)
             {
-                Console.WriteLine("Value used from cache.");
-                return cachedProduct;
+                return null;
             }
-
-            var product = await _context.Products
-                .AsNoTracking()
-                .Where(product => product.Id == id)
-                .Select(product => new ProductResponseDto
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Price = product.Price,
-                    Stock = product.Stock
-                })
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (product != null)
-            {
-                _cache.Set(
-                    cacheKey,
-                    product,
-                    TimeSpan.FromMinutes(5));
-            }
-
-            Console.WriteLine("Value used from DB.");
-            return product;
-        }
-
-        public async Task<ProductResponseDto> CreateAsync(
-            ProductCreateDto dto,
-            CancellationToken cancellationToken = default)
-        {
-            var product = new Product
-            {
-                Name = dto.Name,
-                Price = dto.Price,
-                Stock = dto.Stock
-            };
-
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync(cancellationToken);
 
             return new ProductResponseDto
             {
@@ -130,44 +52,42 @@ namespace Inventory.Services
             };
         }
 
-        public async Task<bool> UpdateAsync(
-            int id,
-            ProductUpdateDto dto,
-            CancellationToken cancellationToken = default)
+        public async Task<ProductResponseDto> CreateAsync(ProductCreateDto dto, CancellationToken cancellationToken = default)
         {
-            var product = await _context.Products
-                .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
-
-            if (product is null)
+            var product = new Product
             {
-                return false;
-            }
+                Name = dto.Name,
+                Price = dto.Price,
+                Stock = dto.Stock
+            };
 
-            product.Name = dto.Name;
-            product.Price = dto.Price;
-            product.Stock = dto.Stock;
+            var createdProduct = await _productRepository.CreateAsync(product, cancellationToken);
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return true;
+            return new ProductResponseDto
+            {
+                Id = createdProduct.Id,
+                Name = createdProduct.Name,
+                Price = createdProduct.Price,
+                Stock = createdProduct.Stock
+            };
         }
 
-        public async Task<bool> DeleteAsync(
-            int id,
-            CancellationToken cancellationToken = default)
+        public async Task<bool> UpdateAsync(int id, ProductUpdateDto dto, CancellationToken cancellationToken = default)
         {
-            var product = await _context.Products
-                .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
-
-            if (product is null)
+            var product = new Product
             {
-                return false;
-            }
+                Id = id,
+                Name = dto.Name,
+                Price = dto.Price,
+                Stock = dto.Stock
+            };
 
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync(cancellationToken);
+            return await _productRepository.UpdateAsync(id, product, cancellationToken);
+        }
 
-            return true;
+        public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _productRepository.DeleteAsync(id, cancellationToken);
         }
     }
 }
