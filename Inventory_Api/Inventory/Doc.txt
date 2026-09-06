@@ -51,10 +51,13 @@ Dans Visual Studio : Ouvre Affichage > Explorateur d'objets SQL Server.
 Voir la DB (azure)
 go to the database > query editor
 
-Update the DB :
+Update the DB (local) :
+changer manuellement
+
+Update the DB (azure) :
 dotnet ef migrations add newMigrationName
-dotnet ef database update
-	si erreur build: dotnet build Inventory.csproj et corriger les erreurs de build
+push on GitHub
+le workflow GitHub action prendra la migration la plus récente pour la push sur azure SQL
 
 
 // XUnit
