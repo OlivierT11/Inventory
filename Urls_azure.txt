@@ -1,0 +1,2 @@
+https://inventory-frontend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
+https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io

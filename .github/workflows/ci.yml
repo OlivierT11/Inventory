@@ -138,8 +138,9 @@ jobs:
 
       - name: Build React frontend
         run: npm run build
+        # this env var is added here because we don't push .env.production
         env:
-          VITE_API_URL: https://inventory-frontend-efdabshchnffhme6.francecentral-01.azurewebsites.net
+          VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
 
       - name: Upload frontend build
         uses: actions/upload-artifact@v5
