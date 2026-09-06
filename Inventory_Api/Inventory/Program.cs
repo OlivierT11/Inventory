@@ -21,7 +21,16 @@ var allowedOrigins =
 // database service
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        // add retry options for transient failures (e.g., network issues, database failover)
+        // useful for cloud-hosted databases (e.g., Azure SQL Database)
+        sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(10),
+                errorNumbersToAdd: null);
+        }));
 
 // Only set the container URL when running in Docker
 var inContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
