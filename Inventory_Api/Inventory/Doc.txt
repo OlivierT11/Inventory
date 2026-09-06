@@ -44,9 +44,12 @@ Vérifiez que le nom de l'instance est correct et que SQL Server est configuré 
 error: 40 - Impossible d'ouvrir une connexion à SQL Server)"
 > revoir "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=InventoryDb;Trusted_Connection=True;TrustServerCertificate=True"
 
-Voir la DB :
+Voir la DB (local) :
 la base est stockée dans l’instance LocalDB MSSQLLocalDB.
 Dans Visual Studio : Ouvre Affichage > Explorateur d'objets SQL Server.
+
+Voir la DB (azure)
+go to the database > query editor
 
 Update the DB :
 dotnet ef migrations add newMigrationName
