@@ -107,14 +107,14 @@ jobs:
           docker build \
             -f Inventory_Api/Inventory/Dockerfile \
             -t "$ACR_LOGIN_SERVER/$BACKEND_CONTAINER_APP:$IMAGE_TAG" \
-            .
+            Inventory_Api/Inventory
 
       - name: Build frontend image
         run: |
           docker build \
             -f Inventory_React/Dockerfile \
             -t "$ACR_LOGIN_SERVER/$FRONTEND_CONTAINER_APP:$IMAGE_TAG" \
-            .
+            Inventory_React
 
       - name: Push backend image
         run: |
