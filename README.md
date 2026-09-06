@@ -30,6 +30,7 @@ A lightweight RESTful API for managing products. Built with ASP.NET Core (.NET 1
 - Server-side and client-side data validation
 - Error logging (ILogger)
 - Frontend notifications after CRUD operations
+- Azure Key Vault
 - GitHub Actions pipeline for continuous integration and continuous deployment (CI/CD):
     Build and run
     xUnit tests
@@ -46,6 +47,9 @@ A lightweight RESTful API for managing products. Built with ASP.NET Core (.NET 1
 - JWT Bearer authentication
 - IMemoryCache for caching
 - Serilog/Console/Debug logging (console & debug configured)
+- Azure container app
+- Azure SQL database
+- Azure Key Vault
 
 ## Requirements
 - .NET 10 SDK
