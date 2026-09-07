@@ -150,6 +150,7 @@ jobs:
 
   
   docker-compose:
+    needs: build-frontend
     runs-on: ubuntu-latest
 
     steps:
