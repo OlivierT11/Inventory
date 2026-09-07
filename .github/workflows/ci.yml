@@ -156,8 +156,15 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v5
 
+      # necessary to use docker compose on the build done by previous steps, not starting again from zero
+      - name: Download frontend build
+        uses: actions/download-artifact@v5
+        with:
+          name: inventory-frontend
+          path: ./Inventory_React/dist
+        
       - name: Build Docker Compose services
-        run: docker compose build
+        run: docker compose build --no-cache
 
       - name: Start services
         run: docker compose up -d

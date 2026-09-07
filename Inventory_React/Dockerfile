@@ -13,9 +13,10 @@ COPY . .
 
 # use the vars in .env.production or .env.dev
 ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
 
-# build the app (vite produces /app/dist by default)
+# build the app (VITE produces /app/dist by default)
+RUN echo "Building with VITE_API_URL=${VITE_API_URL}"
 RUN npm run build
 
 FROM nginx:alpine
