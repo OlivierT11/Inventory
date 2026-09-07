@@ -166,6 +166,8 @@ jobs:
         
       - name: Build Docker Compose services
         run: docker compose build --no-cache
+        env:
+          VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
 
       - name: Start services
         run: docker compose up -d
