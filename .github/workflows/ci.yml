@@ -163,22 +163,32 @@ jobs:
         with:
           name: inventory-frontend
           path: ./Inventory_React/dist
-        
+
+      # diagnostic step
+      # check in the github logs that the var VITE_API_URL is correctly set (not empty)
+      - name: Check Compose configuration
+        run: docker compose -f docker-compose.prod.yml config
+        env:
+          VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
+
+      # check in the github logs that the var VITE_API_URL is correctly set (not empty)
       - name: Build Docker Compose services
-        run: docker compose build --no-cache
+        run: docker compose -f docker-compose.prod.yml build --no-cache
         env:
           VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
 
       - name: Start services
-        run: docker compose up -d
+        run: docker compose -f docker-compose.prod.yml up -d
+        env:
+          VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
 
       - name: Show running containers
-        run: docker compose ps
+        run: docker compose -f docker-compose.prod.yml ps
 
       - name: Show logs
         if: failure()
-        run: docker compose logs
+        run: docker compose -f docker-compose.prod.yml logs
 
       - name: Stop services
         if: always()
-        run: docker compose down
+        run: docker compose -f docker-compose.prod.yml down
