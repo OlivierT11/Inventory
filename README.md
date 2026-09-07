@@ -114,6 +114,10 @@ appsettings.json { "ConnectionStrings": { "DefaultConnection": "Server=.;Databas
 ## Logging & diagnostics
 - Console and Debug logging providers are configured. Adjust logging in `Program.cs` or `appsettings.json` as needed.
 
+## Azure URLSs 
+- https://inventory-frontend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
+- https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
+
 ## Contributing
 - Fork the repository and create a feature branch.
 - Add tests for new features.
