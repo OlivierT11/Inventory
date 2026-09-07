@@ -73,15 +73,27 @@ builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy()) // app health check
     .AddDbContextCheck<AppDbContext>(); // database health check
 
-// CORS (for frontend calls)
+// CORS (for frontend calls or direct API calls)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactApp", policy =>
     {
-        policy
-            .WithOrigins(allowedOrigins)
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        // connect from anywhere (allows API testing in prod)
+        if (allowedOrigins.Contains("*"))
+        {
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
+        // connect from frontend only
+        else
+        {
+            policy
+                .WithOrigins(allowedOrigins)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
     });
 });
 

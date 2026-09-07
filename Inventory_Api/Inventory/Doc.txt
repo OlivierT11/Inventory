@@ -287,3 +287,12 @@ az webapp log tail   --name "Inventory"   --resource-group "Inventory-app"
 Azure dashboard > sql database > settings > connection strings
 Puis, la mettre en var env du backend : name = ConnectionStrings__DefaultConnection
 	Azure Portal → Backend Web App → Settings → Environment variables
+
+
+
+----------------------
+// Use azure key vault
+make sure you're not using azure key vault HSM
+Create a secret in azure key vault; pas de majuscules dans le nom
+link a container app secret to the azure key vault : container app > security > secret > add a secret using the key name in the key vault
+map a var env in the code hosted in the container app to the secret in the container app : container app > application > containers > var env
