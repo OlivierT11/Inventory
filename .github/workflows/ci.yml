@@ -153,6 +153,9 @@ jobs:
     needs: build-frontend
     runs-on: ubuntu-latest
 
+    env:
+      VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
@@ -168,19 +171,13 @@ jobs:
       # check in the github logs that the var VITE_API_URL is correctly set (not empty)
       - name: Check Compose configuration
         run: docker compose -f docker-compose.prod.yml config
-        env:
-          VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
 
       # check in the github logs that the var VITE_API_URL is correctly set (not empty)
       - name: Build Docker Compose services
         run: docker compose -f docker-compose.prod.yml build --no-cache
-        env:
-          VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
 
       - name: Start services
         run: docker compose -f docker-compose.prod.yml up -d
-        env:
-          VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
 
       - name: Show running containers
         run: docker compose -f docker-compose.prod.yml ps

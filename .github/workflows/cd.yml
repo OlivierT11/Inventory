@@ -111,6 +111,9 @@ jobs:
             Inventory_Api/Inventory
 
       - name: Build frontend image
+        env:
+          VITE_API_URL: 
+            https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
         run: |
           docker build \
             --build-arg VITE_API_URL="$VITE_API_URL" \
