@@ -20,6 +20,8 @@ env:
   DATABASE_RESOURCE_GROUP: Inventory-app
   IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
   BACKEND_CONTAINER_APP: inventory-backend-container-app
+  BACKEND_CONTAINER_RESOURCE_GROUP: inventory-backend-container-rg
+  FRONTEND_CONTAINER_RESOURCE_GROUP: inventory-frontend-container-rg
   FRONTEND_CONTAINER_APP: inventory-frontend-container-app
   VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
 
@@ -134,12 +136,12 @@ jobs:
         run: |
           az containerapp update \
             --name "$BACKEND_CONTAINER_APP" \
-            --resource-group "$CONTAINER_RESOURCE_GROUP" \
+            --resource-group "$BACKEND_CONTAINER_RESOURCE_GROUP" \
             --image "$ACR_LOGIN_SERVER/$BACKEND_CONTAINER_APP:$IMAGE_TAG"
 
       - name: Deploy frontend container app
         run: |
           az containerapp update \
             --name "$FRONTEND_CONTAINER_APP" \
-            --resource-group "$CONTAINER_RESOURCE_GROUP" \
+            --resource-group "$FRONTEND_CONTAINER_RESOURCE_GROUP" \
             --image "$ACR_LOGIN_SERVER/$FRONTEND_CONTAINER_APP:$IMAGE_TAG"
