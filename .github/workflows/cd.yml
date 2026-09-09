@@ -16,8 +16,9 @@ permissions:
 env:
   ACR_NAME: inventorycontrainer
   ACR_LOGIN_SERVER: inventorycontrainer.azurecr.io
-  RESOURCE_GROUP: inventory_container_registry
-  IMAGE_TAG: ${{ github.sha }}
+  CONTAINER_RESOURCE_GROUP: inventory_container_registry
+  DATABASE_RESOURCE_GROUP: Inventory-app
+  IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
   BACKEND_CONTAINER_APP: inventory-backend-container-app
   FRONTEND_CONTAINER_APP: inventory-frontend-container-app
   VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
@@ -55,7 +56,7 @@ jobs:
       - name: Allow runner through Azure SQL firewall
         run: |
           az sql server firewall-rule create \
-            --resource-group Inventory-app \
+            --resource-group $DATABASE_RESOURCE_GROUP \
             --server inventory-app-database \
             --name GitHubActions-${{ github.run_id }} \
             --start-ip-address ${{ steps.runner-ip.outputs.ip }} \
@@ -80,7 +81,7 @@ jobs:
         if: always()
         run: |
           az sql server firewall-rule delete \
-            --resource-group Inventory-app \
+            --resource-group $DATABASE_RESOURCE_GROUP \
             --server inventory-app-database \
             --name GitHubActions-${{ github.run_id }}
 
@@ -128,3 +129,17 @@ jobs:
       - name: Push frontend image
         run: |
           docker push "$ACR_LOGIN_SERVER/$FRONTEND_CONTAINER_APP:$IMAGE_TAG"
+
+      - name: Deploy backend container app
+        run: |
+          az containerapp update \
+            --name "$BACKEND_CONTAINER_APP" \
+            --resource-group "$CONTAINER_RESOURCE_GROUP" \
+            --image "$ACR_LOGIN_SERVER/$BACKEND_CONTAINER_APP:$IMAGE_TAG"
+
+      - name: Deploy frontend container app
+        run: |
+          az containerapp update \
+            --name "$FRONTEND_CONTAINER_APP" \
+            --resource-group "$CONTAINER_RESOURCE_GROUP" \
+            --image "$ACR_LOGIN_SERVER/$FRONTEND_CONTAINER_APP:$IMAGE_TAG"

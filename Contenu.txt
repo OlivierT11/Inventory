@@ -38,6 +38,8 @@ Health check basique (API + DB)
 
 
 // TODO 
+tests intégration
+azure monitoring
 cache appels API
 TU appels API (pour l'instant c'est que openAPI/swagger)
 front: login form + session
