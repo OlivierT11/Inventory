@@ -15,6 +15,9 @@ COPY . .
 ARG VITE_API_URL
 ENV VITE_API_URL=${VITE_API_URL}
 
+#temp DEBUG
+RUN test -n "$VITE_API_URL" || (echo "VITE_API_URL is missing" && exit 1)  
+
 # build the app (VITE produces /app/dist by default)
 RUN echo "Building with VITE_API_URL=${VITE_API_URL}"
 RUN npm run build

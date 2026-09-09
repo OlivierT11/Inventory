@@ -19,7 +19,8 @@ services:
       context: ./Inventory_React
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: ${VITE_API_URL}
+        # Docker Compose echouera si VITE_API_URL est absente au lieu de construire un frontend avec une valeur vide.
+        VITE_API_URL: ${VITE_API_URL:?VITE_API_URL is required}
     container_name: inventory-client
     # The client will run on this port (use in URL)
     ports:

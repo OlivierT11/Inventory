@@ -47,6 +47,9 @@ export default function ProductForm() {
 
         const apiUrl = import.meta.env.VITE_API_URL;
 
+        // temp DEBUG
+        console.log("API URL =", import.meta.env.VITE_API_URL);
+
         try {
             const response = await fetch(`${apiUrl}/api/products`, {
                 method: "POST",

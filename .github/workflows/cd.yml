@@ -20,6 +20,7 @@ env:
   IMAGE_TAG: ${{ github.sha }}
   BACKEND_CONTAINER_APP: inventory-backend-container-app
   FRONTEND_CONTAINER_APP: inventory-frontend-container-app
+  VITE_API_URL: https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
 
 jobs:
 
@@ -112,6 +113,7 @@ jobs:
       - name: Build frontend image
         run: |
           docker build \
+            --build-arg VITE_API_URL="$VITE_API_URL" \
             -f Inventory_React/Dockerfile \
             -t "$ACR_LOGIN_SERVER/$FRONTEND_CONTAINER_APP:$IMAGE_TAG" \
             Inventory_React
