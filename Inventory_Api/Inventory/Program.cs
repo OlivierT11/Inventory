@@ -23,8 +23,8 @@ var allowedOrigins =
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        // add retry options for transient failures (e.g., network issues, database failover)
-        // useful for cloud-hosted databases (e.g., Azure SQL Database)
+        // add retry options for transient failures (e.g., network issues, database failover).
+        // useful for cloud-hosted databases (e.g., Azure SQL Database).
         sqlOptions =>
         {
             sqlOptions.EnableRetryOnFailure(
