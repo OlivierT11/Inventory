@@ -1,11 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
-type User= {
-    email: string;
-    password: string;
-};
 
 type UserFormData = {
     email: string;
@@ -19,7 +14,6 @@ const emptyForm: UserFormData = {
 
 
 export default function LoginUser() {
-    const [user, setUser] = useState<User>();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
