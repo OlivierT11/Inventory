@@ -334,7 +334,7 @@ public class UnitTest1
         var tokenProp = okResult.Value
             .GetType()
             .GetProperty("access_token", BindingFlags.Public | BindingFlags.Instance);
-            
+
         Assert.NotNull(tokenProp);
         var actualToken = tokenProp.GetValue(okResult.Value) as string;
         Assert.Equal(expectedToken, actualToken);
