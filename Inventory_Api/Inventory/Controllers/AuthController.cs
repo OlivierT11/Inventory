@@ -1,7 +1,9 @@
 ﻿using Inventory.DTOs;
 using Inventory.Models;
 using Inventory.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Inventory.Controllers
 {
@@ -13,10 +15,16 @@ namespace Inventory.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _service;
+        private readonly TokenRevocationService _tokenRevocationService;
 
         public AuthController(IAuthService service)
         {
             _service = service;
+        }
+
+        public AuthController(TokenRevocationService tokenRevocationService)
+        {
+            _tokenRevocationService = tokenRevocationService;
         }
 
         /// <summary>
@@ -24,21 +32,61 @@ namespace Inventory.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpPost("login")]
+        [HttpPost("login")] //(url)/api/auth/login
         public async Task<IActionResult> Login(LoginDto dto, CancellationToken cancellationToken = default)
         {
             var token = await _service.LogUserAsync(dto, cancellationToken);
 
             if (token is null)
             {
-                return Unauthorized(new
+                return Unauthorized(new  // Unauthorized() is part of IActionResult, as well as OK()
                 {
-                    message = "Invalid email or password"
+                    message = "Invalid email or password."
                 });
             }
 
-            return Ok(new { Token = token });
+            return Ok(new { access_token = token });
         }
+
+        /// <summary>
+        /// Handles user logout requests. Revokes the JWT token provided in the Authorization header, preventing further use of that token for authentication.
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            // Extract the JWT token from the Authorization header
+            var token = Request.Headers.Authorization
+                .ToString()
+                .Replace("Bearer ", "", StringComparison.OrdinalIgnoreCase);
+
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return BadRequest("Missing access token.");
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Extract the jti (JWT ID) claim from the token, which is used to uniquely identify the token for revocation purposes.
+            var jti = jwtToken.Claims
+                .FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Jti)
+            ?.Value;
+
+            if (string.IsNullOrWhiteSpace(jti))
+            {
+                return BadRequest("Token does not contain a jti claim.");
+            }
+
+            _tokenRevocationService.Revoke(
+                jti,
+                jwtToken.ValidTo
+            );
+
+            return NoContent();
+        }
+
 
         /// <summary>
         /// Handles user registration requests. Creates a new user with the provided email, password, and role. Returns a success message if the user is created successfully, or an error message if there was an issue during the creation process.
@@ -46,7 +94,7 @@ namespace Inventory.Controllers
         /// <param name="request">The user registration details.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        [HttpPost("register")]
+        [HttpPost("register")] //(url)/api/auth/register
         public async Task<IActionResult> AddUser(CreateUserDTO request, CancellationToken cancellationToken = default)
         {
             var isAdded = await _service.AddUserAsync(request, cancellationToken);
@@ -55,7 +103,7 @@ namespace Inventory.Controllers
             {
                 return BadRequest(new
                 {
-                    message = "there was an error creating the user."
+                    message = "This user already exists."
                 });
             }
 

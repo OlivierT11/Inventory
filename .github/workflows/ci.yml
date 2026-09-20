@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Puts the content of the github repo inside the github actions VM
       - name: Check out repository
         uses: actions/checkout@v5
 

@@ -347,8 +347,10 @@ public class UnitTest1
         // Arrange
         var mockService = new Mock<IAuthService>();
         mockService
-            .Setup(s => s.LogUserAsync(It.IsAny<LoginDto>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((string?)null);
+            .Setup(s => s.LogUserAsync(
+                It.IsAny<LoginDto>(), // "It" is a Moq helper class used to describe argument matching
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync((string?)null);  // return null asynchronously ; (string?) explicitly tells the compiler that the returned value is a nullable string.
 
         var controller = new AuthController(mockService.Object);
         var dto = new LoginDto { Email = "user@example.com", Password = "wrong" };
@@ -370,7 +372,9 @@ public class UnitTest1
         // Arrange
         var mockService = new Mock<IAuthService>();
         mockService
-            .Setup(s => s.AddUserAsync(It.IsAny<CreateUserDTO>(), It.IsAny<CancellationToken>()))
+            .Setup(s => s.AddUserAsync(
+                It.IsAny<CreateUserDTO>(), 
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
 
         var controller = new AuthController(mockService.Object);

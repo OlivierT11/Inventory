@@ -273,9 +273,13 @@ namespace Inventory.Repositories
                     return false;
                 }
 
+                // Console.WriteLine(updatedProduct.State); // DEBUG: Log the state of the entity before updating
+
                 updatedProduct.Name = product.Name;
                 updatedProduct.Price = product.Price;
                 updatedProduct.Stock = product.Stock;
+
+                // Console.WriteLine(updatedProduct.State); // DEBUG: Log the state of the entity after updating
 
                 await _context.SaveChangesAsync(cancellationToken);
 

@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Inventory.DTOs;
+using Inventory.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Inventory.Controllers
 {
@@ -10,19 +14,20 @@ namespace Inventory.Controllers
     [Route("api/profile")]
     public class ProfileController : ControllerBase
     {
+
         /// <summary>
         /// Gets the profile information of the authenticated user.
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [Authorize] // uses app.UseAuthorization();
         [HttpGet]
         public IActionResult GetProfile()
         {
             return Ok(new
             {
-                email = User.FindFirst("email")?.Value
-                        ?? User.FindFirst(
-                            System.Security.Claims.ClaimTypes.Email)?.Value
+                userId = User.FindFirstValue(JwtRegisteredClaimNames.Sub),
+                email = User.FindFirstValue(JwtRegisteredClaimNames.Email),
+                role = User.FindFirstValue(ClaimTypes.Role)
             });
         }
 

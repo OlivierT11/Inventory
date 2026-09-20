@@ -31,21 +31,26 @@ namespace Inventory.Services
         /// <exception cref="InvalidOperationException">Thrown when the JWT key is missing.</exception>
         public string CreateToken(int userId, string email, string role)
         {
+            // Get the JWT configuration section from the appsettings.json file
             var jwt = _configuration.GetSection("Jwt");
             var key = jwt["Key"]
                 ?? throw new InvalidOperationException("JWT key is missing.");
 
+            // Create claims for the token, including a unique identifier, user ID, email, and role
             var claims = new[]
             {
-            new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, email),
-            new Claim(ClaimTypes.Role, role)
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // unique identifier for the token, used to revoke the token on logout
+            new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()), // used to identify the user
+            new Claim(JwtRegisteredClaimNames.Email, email), // used to identify the user
+            new Claim(ClaimTypes.Role, role) // used to identify the user's role
         };
 
+            // Create signing credentials using the JWT key and HMAC SHA256 algorithm
             var credentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
                 SecurityAlgorithms.HmacSha256);
 
+            // Create the JWT token with the specified issuer, audience, claims, expiration time, and signing credentials
             var token = new JwtSecurityToken(
                 issuer: jwt["Issuer"],
                 audience: jwt["Audience"],

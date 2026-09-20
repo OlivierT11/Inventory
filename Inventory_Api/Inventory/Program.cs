@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,9 +45,11 @@ var jwtSettings = builder.Configuration.GetSection("Jwt");
 var signingKey = jwtSettings["Key"]
     ?? throw new InvalidOperationException("JWT key is missing.");
 
+// Configure JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        // Configure the token validation parameters for JWT authentication
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
@@ -61,6 +64,33 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             ValidateLifetime = true,
             ClockSkew = TimeSpan.FromMinutes(1)
+        };
+
+        // Add an event handler to check for revoked tokens during token validation
+        // Necessary because JWT tokens are stateless and cannot be invalidated on the server side without additional logic.
+        options.Events = new JwtBearerEvents
+        {
+            // This event is triggered when a token is successfully validated.
+            OnTokenValidated = context =>
+            {
+                // Get the TokenRevocationService from the request services to check if the token has been revoked.
+                var revocationService =
+                    context.HttpContext.RequestServices
+                        .GetRequiredService<TokenRevocationService>();
+
+                // Extract the unique identifier (jti) claim from the validated token.
+                var jti = context.Principal?
+                    .FindFirst(JwtRegisteredClaimNames.Jti)
+                    ?.Value;
+
+                if (!string.IsNullOrWhiteSpace(jti) &&
+                    revocationService.IsRevoked(jti))
+                {
+                    context.Fail("This token has been revoked.");
+                }
+
+                return Task.CompletedTask;
+            }
         };
     });
 
@@ -100,6 +130,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<JwtTokenService>();
+builder.Services.AddSingleton<TokenRevocationService>(); // singleton service for revoking JWT tokens. This must be a singleton so that the revoked tokens are shared across all requests and users.
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -113,7 +144,8 @@ builder.Logging.AddDebug();
 
 var app = builder.Build();
 
-// Apply database migrations automatically in Docker
+// Apply Entity Framework Core database migrations automatically in the "Docker" environment.
+// This ensures that the database schema is up-to-date when the application starts in a containerized environment.
 if (app.Environment.IsEnvironment("Docker"))
 {
     using (var scope = app.Services.CreateScope())
@@ -124,9 +156,10 @@ if (app.Environment.IsEnvironment("Docker"))
 }
 
 // Configure the HTTP request pipeline.
+// Enable OpenAPI (Swagger) in development environment
 if (app.Environment.IsDevelopment())
 {
-    // See the JSON describing the api at http://localhost:5293/openapi/v1.json (based on ProductController.cs)
+    // Adds an HTTP route that serves the OpenAPI specification document (JSON) for the API.
     app.MapOpenApi();
 
     // enable swagger ui
@@ -136,9 +169,11 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+// Use HTTPS redirection in development and production, but not in container (Docker) environment
 // Avoid forcing HTTPS when running in container (prevents broken redirects)
 if (!inContainer)
 {
+    // Adds an ASP.NET middleware that redirects HTTP requests to HTTPS.
     app.UseHttpsRedirection();
 }
 
@@ -148,6 +183,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/error");
 }
 
+// Authorizes the React frontend to call the API (CORS), for example with fetch().
 app.UseCors("ReactApp");
 
 app.UseAuthentication(); //jwt
@@ -156,6 +192,7 @@ app.UseAuthorization();
 // health check
 app.MapHealthChecks("/api/health"); //"Healthy" means both the app and the database will be healthy
 
+// Connects the controllers using thir defined routes (e.g., ProductController.cs defines /api/products route)
 app.MapControllers();
 
 app.Run();

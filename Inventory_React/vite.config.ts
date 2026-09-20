@@ -9,6 +9,7 @@ export default defineConfig({
             ignored: ["**/.vs/**", "**/node_modules/**", "**/.git/**"],
         },
         proxy: {
+            // only used if the fetch URLS do not use ${apiUrl}
             "/api": {
                 target: "http://backend:8080",
                 changeOrigin: true
