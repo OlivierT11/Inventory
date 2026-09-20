@@ -373,7 +373,7 @@ public class UnitTest1
         var mockService = new Mock<IAuthService>();
         mockService
             .Setup(s => s.AddUserAsync(
-                It.IsAny<CreateUserDTO>(), 
+                It.IsAny<CreateUserDTO>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
 
