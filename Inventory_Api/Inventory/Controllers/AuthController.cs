@@ -17,7 +17,7 @@ namespace Inventory.Controllers
         private readonly IAuthService _service;
         private readonly TokenRevocationService _tokenRevocationService;
 
-        public AuthController(IAuthService service, TokenRevocationService tokenRevocationService)
+        public AuthController(IAuthService service, TokenRevocationService tokenRevocationService = default)
         {
             _service = service;
             _tokenRevocationService = tokenRevocationService;
