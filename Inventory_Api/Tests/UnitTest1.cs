@@ -331,7 +331,10 @@ public class UnitTest1
         Assert.NotNull(okResult.Value);
 
         // anonymous object { Token = token } -> reflect to get Token property
-        var tokenProp = okResult.Value.GetType().GetProperty("Token", BindingFlags.Public | BindingFlags.Instance);
+        var tokenProp = okResult.Value
+            .GetType()
+            .GetProperty("access_token", BindingFlags.Public | BindingFlags.Instance);
+            
         Assert.NotNull(tokenProp);
         var actualToken = tokenProp.GetValue(okResult.Value) as string;
         Assert.Equal(expectedToken, actualToken);
