@@ -247,9 +247,6 @@ The application can be deployed to Azure using:
 Frontend:
 https://inventory-frontend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
 
-Backend:
-https://inventory-backend-container-app.gentledune-2e10108a.francecentral.azurecontainerapps.io
-
 ## Business Rules
 
 The business rules are documented progressively as the application evolves.
