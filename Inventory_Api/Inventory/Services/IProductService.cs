@@ -9,7 +9,7 @@ namespace Inventory.Services
         Task<List<ProductResponseDto>> GetAllAsync(
             CancellationToken cancellationToken = default);
 
-        Task<ProductListDto> GetWithPager(
+        Task<ProductListDto> GetWithPagerAsync(
             int page,
             CancellationToken cancellationToken = default);
 

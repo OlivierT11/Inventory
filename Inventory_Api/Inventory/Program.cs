@@ -142,6 +142,9 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
+// Add ProblemDetails middleware for centralized error handling and standardized error responses
+builder.Services.AddProblemDetails();
+
 var app = builder.Build();
 
 // Apply Entity Framework Core database migrations automatically in the "Docker" environment.
@@ -177,17 +180,19 @@ if (!inContainer)
     app.UseHttpsRedirection();
 }
 
-if (!app.Environment.IsDevelopment())
-{
-    // Centralized exception handling rather than logging errors in every controller
-    app.UseExceptionHandler("/error");
-}
-
 // Authorizes the React frontend to call the API (CORS), for example with fetch().
 app.UseCors("ReactApp");
 
 app.UseAuthentication(); //jwt
 app.UseAuthorization();
+
+// Custom error handling endpoint for centralized exception handling (ProblemDetails). Rather than logging technical errors in every controller
+app.UseExceptionHandler("/error");
+app.UseStatusCodePages(); 
+app.Map("/error", () =>
+    Results.Problem(
+        statusCode: StatusCodes.Status500InternalServerError,
+        title: "Une erreur interne est survenue."));
 
 // health check
 app.MapHealthChecks("/api/health"); //"Healthy" means both the app and the database will be healthy

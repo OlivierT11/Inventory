@@ -55,7 +55,8 @@ namespace Inventory.Repositories
 
                 throw;
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (
+                timeoutCts.IsCancellationRequested)
             {
                 _logger.LogWarning(
                     "Log user timed out");
@@ -93,7 +94,8 @@ namespace Inventory.Repositories
                     "Add user was canceled by the caller");
                 throw;
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (
+                timeoutCts.IsCancellationRequested)
             {
                 _logger.LogWarning(
                     "Add user timed out");
